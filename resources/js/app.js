@@ -1,6 +1,7 @@
-import './bootstrap';
+import "./bootstrap";
+import "@tabler/core/dist/js/tabler.min.js";
 
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 
