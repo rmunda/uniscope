@@ -24,17 +24,40 @@
                         <span class="text-muted small">Admin</span>
                     </div>
                 </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Profile</a>
+
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">    
+
+                    <a href="#" class="dropdown-item d-flex align-items-center gap-2">
+                        <!-- Profile SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1 -8 0"></path>
+                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                        </svg>
+                        Profile
+                    </a>
+
                     <div class="dropdown-divider"></div>
+
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="dropdown-item text-danger">Logout</button>
+                        <button type="submit" class="dropdown-item text-danger d-flex align-items-center gap-2">
+                            <!-- Logout SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 8l4 4l-4 4"></path>
+                                <path d="M5 12h13"></path>
+                                <path d="M9 4h-4a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h4"></path>
+                            </svg>
+                            Logout
+                        </button>
                     </form>
+
                 </div>
             </div>
         </div>
-
     </div>
 </header>
 

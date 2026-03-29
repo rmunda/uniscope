@@ -31,9 +31,10 @@
     color: #495057;
 }
 
-.sidebar-border {
+.sidebar {
     border-right: 1px solid #e5e7eb; /* Soft gray border */
     min-height: 100vh; /* Ensures the border goes all the way down */
+    background-color: #ffffff;
 }
 
 /* Flash message */

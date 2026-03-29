@@ -57,8 +57,15 @@
                         {{-- SIDEBAR --}}
                         @include('partials.sidebar')
                     </div>
-                    <main class="col-md-10" style="overflow-y: auto; height: calc(100vh - 56px);">
-                        <div class="page-body">
+
+                    <main class="col-md-10 " style="overflow-y: auto; height: calc(100vh - 56px); padding-right: 20px; background-color: #f6f8fb;">
+                            {{-- PAGE HEADER --}}
+                            @isset($header)
+                                <div class="page-header d-print-none">                                    
+                                    {{ $header }}                                    
+                                </div>
+                            @endisset
+                        <div class="page-body">                       
                             {{ $slot }}
                         </div>
                     </main>
@@ -68,6 +75,7 @@
             @include('partials.footer')
         </div>
     </div>
+
 {{-- FLASH TOAST --}}
 <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
     
