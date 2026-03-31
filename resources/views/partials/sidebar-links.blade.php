@@ -52,4 +52,66 @@
             <span class="nav-link-title">Academics</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center justify-content-between"
+        data-bs-toggle="collapse"
+        href="#examsMenu"
+        role="button"
+        aria-expanded="false"
+        aria-controls="examsMenu">
+
+            <!-- Left: Icon + Text -->
+            <div class="d-flex align-items-center">
+                <span class="nav-link-icon me-2">
+                    <!-- icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                        width="24" 
+                        height="24" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard-text">
+                        <path stroke="none" d="M0 0h24v24H0z" 
+                        fill="none" />
+                        <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                        <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2" />
+                        <path d="M9 12h6" />
+                        <path d="M9 16h6" />
+                    </svg>
+                </span>
+                <span class="nav-link-title">Exams / Grades</span>
+            </div>
+
+            <!-- Right: Arrow -->
+            <span class="ms-auto">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="icon"
+                    width="24" height="24"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">                    
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <polyline points="6 9 12 15 18 9" />
+                </svg>
+            </span>
+        </a>
+
+        <!-- Submenu -->
+        <div class="collapse" id="examsMenu">
+            <ul class="nav flex-column ms-4">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">All Exams</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Grades</a>
+                </li>
+            </ul>
+        </div>
+    </li>
 </ul>
