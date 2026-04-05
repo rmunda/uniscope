@@ -77,7 +77,7 @@
     </div>
 
 {{-- FLASH TOAST --}}
-<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+<!-- <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
     
     @if(session('success'))
         <div class="toast align-items-center text-bg-success border-0 show" role="alert">
@@ -123,13 +123,19 @@
         </div>
     @endif
 
+</div> -->
+
+{{-- ✅ GLOBAL TOAST CONTAINER --}}
+<div class="toast-container position-fixed end-0 p-3" 
+     style="top: 70px; z-index: 9999;">
 </div>
+
 {{-- JS --}}
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-<script>
+<!-- <script>
     $(document).ready(function () {
         $('.toast').each(function () {
             let toast = new bootstrap.Toast(this, {
@@ -138,6 +144,101 @@
             toast.show();
         });
     });
+</script> -->
+
+{{-- ✅ UNIFIED TOAST FUNCTION --}}
+<script>
+function showToast(type, message) {
+    let container = document.querySelector('.toast-container');
+
+    let styles = {
+        success: {
+            bg: 'var(--tblr-success-lt)',
+            color: 'var(--tblr-success)',
+            border: 'var(--tblr-success)'
+        },
+        error: {
+            bg: 'var(--tblr-danger-lt)',
+            color: 'var(--tblr-danger)',
+            border: 'var(--tblr-danger)'
+        },
+        warning: {
+            bg: 'var(--tblr-warning-lt)',
+            color: 'var(--tblr-warning)',
+            border: 'var(--tblr-warning)'
+        },
+        info: {
+            bg: 'var(--tblr-primary-lt)',
+            color: 'var(--tblr-primary)',
+            border: 'var(--tblr-primary)'
+        }
+    }[type];
+
+    let toastEl = document.createElement('div');
+    toastEl.className = `toast align-items-center border-0`;
+    toastEl.role = 'alert';
+
+    toastEl.style.backgroundColor = styles.bg;
+    toastEl.style.color = styles.color;
+    toastEl.style.borderLeft = `4px solid ${styles.border}`;
+
+    toastEl.innerHTML = `
+        <div class="d-flex">
+            <div class="toast-body">
+                ${message}
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    `;
+
+    container.appendChild(toastEl);
+
+    let toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+    toast.show();
+
+    toastEl.addEventListener('hidden.bs.toast', () => {
+        toastEl.remove();
+    });
+}
+</script>
+
+{{-- ✅ BLADE → JS FLASH MESSAGE BRIDGE --}}
+<script>
+    @if(session('success'))
+        showToast('success', "{{ session('success') }}");
+    @endif
+
+    @if(session('error'))
+        showToast('error', "{{ session('error') }}");
+    @endif
+
+    @if(session('warning'))
+        showToast('warning', "{{ session('warning') }}");
+    @endif
+
+    @if(session('info'))
+        showToast('info', "{{ session('info') }}");
+    @endif
+</script>
+
+{{-- ✅ OPTIONAL: GLOBAL AXIOS ERROR HANDLER --}}
+<script>
+if (window.axios) {
+    axios.interceptors.response.use(
+        response => response,
+        error => {
+            let message = 'Something went wrong!';
+
+            if (error.response?.data?.message) {
+                message = error.response.data.message;
+            }
+
+            showToast('error', message);
+
+            return Promise.reject(error);
+        }
+    );
+}
 </script>
 
 @stack('scripts')
