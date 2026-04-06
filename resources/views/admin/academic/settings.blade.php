@@ -53,7 +53,7 @@
                            <form id="createSessionForm" method="POST">
                               @csrf
                               <div class="mb-3">
-                                 <input type="text" name="name" id="name" class="form-control" placeholder="2021 - 2022" required>
+                                 <input type="text" name="session_name" id="session_name" class="form-control" placeholder="2021 - 2022" required>
                               </div>
                               <div>
                                  <button class="btn btn-outline-primary" type="submit">
@@ -65,7 +65,6 @@
                                  </button>
                               </div>
                            </form>
-                           <div id="createSessionMessage"></div>
                         </div>
                      </div>
                   </div>
@@ -102,7 +101,7 @@
                                     @foreach($sessions as $session)
                                     <option value="{{ $session->id }}"
                                     {{ $session->is_active ? 'selected' : '' }}>
-                                    {{ $session->name }} {{ $session->is_active ? '(Active)' : '' }}
+                                    {{ $session->session_name }} {{ $session->is_active ? '(Active)' : '' }}
                                     </option>
                                     @endforeach
                                  </select>
@@ -117,7 +116,6 @@
                                  </button>
                               </div>
                            </form>
-                           <div id="setSessionMessage"></div>
                         </div>
                      </div>
                   </div>
@@ -125,21 +123,21 @@
             </div>
             <!--START SET SESSION SECTION-->
 
-            <!--START CREATE CLASS SESSION SECTION-->
+            <!--START CREATE CLASS SECTIONS SECTION-->
             <div class="col-sm-12 col-lg-4">
                <div class="card">
                   <div class="card-header">
                      <h3 class="card-title">
-                        <strong>Create Class</strong>
+                        <strong>Create Section</strong>
                      </h3>
                   </div>
                   <div class="card-body">
                      <div class="row gy-3">
                         <div class="col-12 d-flex flex-column">
-                           <form id="createClassForm" method="post">
+                           <form id="createSectionForm" method="post">
                             @csrf
                               <div class="mb-3">
-                                 <input type="text" name="class_name" id="class_name" class="form-control" placeholder="Class-I" required>
+                                 <input type="text" name="section_name" id="section_name" class="form-control" placeholder="Section A" required>
                               </div>
                               <div>
                                  <button class="btn btn-outline-primary" type="submit">
@@ -151,13 +149,12 @@
                                  </button>
                               </div>
                            </form>
-                           <div id="createClassMessage"></div>
                         </div>
                      </div>
                   </div>
                </div>
             </div>
-            <!--START SET SESSION SECTION-->
+            <!--END CLASS SECTIONS SECTION-->
          </div>
       </div>
    </div>
@@ -205,10 +202,10 @@
       document.getElementById('createSessionForm').addEventListener('submit', function(e) {
           e.preventDefault();
       
-          let name = document.getElementById('name').value;
+          let session_name = document.getElementById('session_name').value;
       
           axios.post("{{ route('admin.academic.sessions.store') }}", {
-              name: name
+              session_name: session_name
           })
           .then(response => {
               let data = response.data;
@@ -277,7 +274,7 @@
               sessions.forEach(session => {
                   let option = document.createElement('option');
                   option.value = session.id;
-                  option.text = session.name;
+                  option.text = session.session_name;
       
                   if (session.is_active) {
                       option.text += ' (Active)';
@@ -301,7 +298,7 @@
               sessions.forEach(session => {
                   let option = document.createElement('option');
                   option.value = session.id;
-                  option.text = session.name;
+                  option.text = session.session_name;
       
                   if (session.is_active) {
                       option.text += ' (Active)';
@@ -323,20 +320,20 @@
       //     }
       // }
 
-      // Create Class
-      document.getElementById('createClassForm').addEventListener('submit', function(e) {
+      // Create Section
+      document.getElementById('createSectionForm').addEventListener('submit', function(e) {
           e.preventDefault();
       
-          let class_name = document.getElementById('class_name').value;
+          let section_name = document.getElementById('section_name').value;
       
-          axios.post("{{ route('admin.academic.classes.store') }}", {
-              class_name: class_name
+          axios.post("{{ route('admin.academic.section.store') }}", {
+              section_name: section_name
           })
           .then(response => {
               let data = response.data;
       
-              showToast('success', data.message || 'Class created!');
-              document.getElementById('createClassForm').reset();
+              showToast('success', data.message || 'Section created!');
+              document.getElementById('createSectionForm').reset();
           })
           .catch(error => {
               let message = 'Something went wrong!';

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AcademicSettingsController;
 use App\Http\Controllers\Admin\AcademicSessionController;
 use App\Http\Controllers\Admin\AcademicClassController;
+use App\Http\Controllers\Admin\SectionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,6 +50,19 @@ Route::prefix('admin')
             ->group(function () {
 
                 Route::resource('classes', AcademicClassController::class);
+            });
+    });
+    
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth', 'role:admin,staff'])
+    ->group(function () {
+
+        Route::prefix('academic')
+            ->name('academic.')
+            ->group(function () {
+
+                Route::resource('section', SectionController::class);
             });
     });    
 

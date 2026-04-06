@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAcademicSessionRequest extends FormRequest
+class StoreSectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class StoreAcademicSessionRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'session_name' => 'required|unique:academic_sessions,session_name'
+            'section_name' => 'required|max:50|unique:sections,section_name'
         ];
     }
 }

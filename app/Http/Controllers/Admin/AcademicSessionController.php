@@ -38,7 +38,7 @@ class AcademicSessionController extends Controller
     public function store(StoreAcademicSessionRequest $request)
     {
         $session = AcademicSession::create([
-            'name' => $request->name
+            'session_name' => $request->session_name
         ]);
 
         return response()->json([

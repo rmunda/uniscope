@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-// #[Fillable(['name', 'is_active'])]
-class AcademicSession extends Model
+class Section extends Model
 {
-    /** @use HasFactory<\Database\Factories\AcademicSessionFactory> */
+    /** @use HasFactory<\Database\Factories\SectionFactory> */
     use HasFactory;
 
     /**
@@ -16,5 +15,5 @@ class AcademicSession extends Model
      *
      * @var list<string>
      */
-     protected $fillable = ['session_name', 'is_active'];
+     protected $fillable = ['section_name', 'is_active'];
 }
