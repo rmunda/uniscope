@@ -127,13 +127,24 @@
 
 {{-- ✅ GLOBAL TOAST CONTAINER --}}
 <div class="toast-container position-fixed end-0 p-3" 
-     style="top: 70px; z-index: 9999;">
+     style="top: 50px; z-index: 9999; display: flex; flex-direction: column; gap: 4px;">
 </div>
 
 {{-- JS --}}
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" async></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var grid = document.querySelector('.row-cards');
+        var msnry = new Masonry(grid, {
+            itemSelector: '.col-sm-12', // Matches your column class
+            percentPosition: true
+        });
+    });
+</script>
 
 <!-- <script>
     $(document).ready(function () {
@@ -181,6 +192,7 @@ function showToast(type, message) {
     toastEl.style.backgroundColor = styles.bg;
     toastEl.style.color = styles.color;
     toastEl.style.borderLeft = `4px solid ${styles.border}`;
+    toastEl.style.marginBottom = '5px';
 
     toastEl.innerHTML = `
         <div class="d-flex">
@@ -190,10 +202,13 @@ function showToast(type, message) {
             <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     `;
+    // To make the newest toast appear at the top:
+    container.prepend(toastEl);
 
-    container.appendChild(toastEl);
+    // OR To keep the newest at the bottom:
+    // container.appendChild(toastEl);
 
-    let toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+    let toast = new bootstrap.Toast(toastEl, { delay: 3000 });
     toast.show();
 
     toastEl.addEventListener('hidden.bs.toast', () => {

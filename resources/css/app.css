@@ -48,3 +48,37 @@
     opacity: 0.95;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
+
+/* Compact datatable */
+
+.table-xs td,
+.table-xs th {
+  padding: 4px 6px;     /* ↓ reduce vertical + horizontal space */
+  font-size: 0.8rem;
+  line-height: 1.1;
+}
+
+.btn-xxs {
+  padding: 2px 4px;     /* very tight */
+  border-radius: 4px;
+}
+
+.btn-xxs svg {
+  width: 12px;
+  height: 12px;
+}
+
+.input-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-addon {
+    display: flex;
+    align-items: center;
+    padding-left: 0.75rem; /* Adjust based on your design */
+    pointer-events: none;
+}
+
+

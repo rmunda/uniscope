@@ -62,7 +62,7 @@ Route::prefix('admin')
             ->name('academic.')
             ->group(function () {
 
-                Route::resource('section', SectionController::class);
+                Route::resource('sections', SectionController::class);
             });
     });    
 

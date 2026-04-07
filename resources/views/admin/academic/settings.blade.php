@@ -3,23 +3,7 @@
       <div class="container-xl">
          <div class="row align-items-center">
             <div class="col d-flex align-items-center">
-               <svg xmlns="http://www.w3.org/2000/svg"
-                  style="width: 42px; height: 42px;"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="icon icon-tabler icons-tabler-outline icon-tabler-tools">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M3 21h4l13 -13a1.5 1.5 0 0 0 -4 -4l-13 13v4" />
-                  <path d="M14.5 5.5l4 4" />
-                  <path d="M12 8l-5 -5l-4 4l5 5" />
-                  <path d="M7 8l-1.5 1.5" />
-                  <path d="M16 12l5 5l-4 4l-5 -5" />
-                  <path d="M16 17l-1.5 1.5" />
-               </svg>
+               <svg xmlns="http://www.w3.org/2000/svg" style="width: 42px; height: 42px" viewBox="0 0 24 24" fill="none" stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tool"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" /></svg>
                <h2 class="page-title">
                   Academic Settings
                </h2>
@@ -29,8 +13,8 @@
    </x-slot>
    <div class="page-body">
       <div class="container-xl">
-         <!--START CREATE SESSION SECTION-->
-         <div class="row row-deck row-cards">
+         <div class="row row-cards align-items-start" data-masonry='{"percentPosition": true }'>
+            <!--START CREATE SESSION SECTION -->
             <div class="col-sm-12 col-lg-4">
                <div class="card">
                   <div class="card-header">
@@ -121,7 +105,7 @@
                   </div>
                </div>
             </div>
-            <!--START SET SESSION SECTION-->
+            <!--END SET SESSION SECTION-->
 
             <!--START CREATE CLASS SECTIONS SECTION-->
             <div class="col-sm-12 col-lg-4">
@@ -136,8 +120,65 @@
                         <div class="col-12 d-flex flex-column">
                            <form id="createSectionForm" method="post">
                             @csrf
+
+                            <input type="hidden" id="edit_section_id" name="id">
+
                               <div class="mb-3">
                                  <input type="text" name="section_name" id="section_name" class="form-control" placeholder="Section A" required>
+                              </div>
+                              <div>
+                                 <button class="btn btn-outline-primary" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                       <path d="M5 12l5 5l10 -10" />
+                                    </svg>
+                                    <span id="btnText">Create</span>
+                                 </button>
+
+                                 <button id="cancelEdit" class="btn btn-link text-muted d-none" type="button">
+                                       Cancel
+                                 </button>
+                              </div>
+                           </form>
+                        </div>
+                        <div class="input-icon d-flex align-items-center">
+                            <span class="input-icon-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                            </span>
+                            <input type="text" id="custom-search" class="form-control" placeholder="Search section..." aria-label="Search section">
+                        </div>
+                        <div class="table-responsive">
+                            <table id="sections-table" class="table table-xs align-middle text-nowrap datatable">
+                                <thead>
+                                    <tr>
+                                        <th class="w-1">#</th>
+                                        <th>Section Name</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!--END CLASS SECTIONS SECTION-->
+
+            <!--START CREATE SUBJECT SECTION-->
+            <div class="col-sm-12 col-lg-4">
+               <div class="card">
+                  <div class="card-header">
+                     <h3 class="card-title">
+                        <strong>Create Subject</strong>
+                     </h3>
+                  </div>
+                  <div class="card-body">
+                     <div class="row gy-3">
+                        <div class="col-12 d-flex flex-column">
+                           <form id="createSubjectForm" method="post">
+                            @csrf
+                              <div class="mb-3">
+                                 <input type="text" name="subject_name" id="subject_name" class="form-control" placeholder="Mathematics" required>
                               </div>
                               <div>
                                  <button class="btn btn-outline-primary" type="submit">
@@ -154,7 +195,31 @@
                   </div>
                </div>
             </div>
-            <!--END CLASS SECTIONS SECTION-->
+            <!--END SUBJECT SECTION-->
+         </div>
+      </div>
+   </div>
+   <!-- DELETE CONFIRM MODAL -->
+   <div class="modal modal-blur fade" id="deleteModal" tabindex="-1">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+         <div class="modal-content">
+            
+            <div class="modal-header">
+            <h5 class="modal-title">Confirm Delete</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+            <p>
+               Are you sure you want to delete 
+               <strong id="deleteSectionName"></strong>?
+            </p>
+            </div>
+
+            <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            <button id="confirmDeleteBtn" class="btn btn-danger">Yes, Delete</button>
+            </div>
          </div>
       </div>
    </div>
@@ -321,30 +386,30 @@
       // }
 
       // Create Section
-      document.getElementById('createSectionForm').addEventListener('submit', function(e) {
-          e.preventDefault();
+      // document.getElementById('createSectionForm').addEventListener('submit', function(e) {
+      //     e.preventDefault();
       
-          let section_name = document.getElementById('section_name').value;
+      //     let section_name = document.getElementById('section_name').value;
       
-          axios.post("{{ route('admin.academic.section.store') }}", {
-              section_name: section_name
-          })
-          .then(response => {
-              let data = response.data;
+      //     axios.post("{{ route('admin.academic.sections.store') }}", {
+      //         section_name: section_name
+      //     })
+      //     .then(response => {
+      //         let data = response.data;
       
-              showToast('success', data.message || 'Section created!');
-              document.getElementById('createSectionForm').reset();
-          })
-          .catch(error => {
-              let message = 'Something went wrong!';
+      //         showToast('success', data.message || 'Section created!');
+      //         document.getElementById('createSectionForm').reset();
+      //     })
+      //     .catch(error => {
+      //         let message = 'Something went wrong!';
       
-              if (error.response && error.response.data.errors) {
-                  message = Object.values(error.response.data.errors)[0][0];
-              }
+      //         if (error.response && error.response.data.errors) {
+      //             message = Object.values(error.response.data.errors)[0][0];
+      //         }
       
-              showToast('error', message);
-          });
-      });
+      //         showToast('error', message);
+      //     });
+      // });
       
       // Show response message
     //   function showMessage(targetId, type, text) {
@@ -381,5 +446,160 @@
     //       `;
     //   }
    </script>
+
+   <!-- DATATABLE-->
+   <script>
+    $(document).ready(function() {
+        var table = $('#sections-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('admin.academic.sections.index') }}",
+            pageLength: 3,
+            dom: 'tpr', // 't' = table, 'p' = pagination, 'r' = processing. (Hidden 'f' = search box)
+            ordering: false,
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                { data: 'section_name', name: 'section_name' },
+                { 
+                    data: 'action', 
+                    name: 'action', 
+                    orderable: false, 
+                    searchable: false,
+                    className: 'text-end'
+                },
+            ],
+            language: {
+                paginate: {
+                    next: '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>',
+                    previous: '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>'
+                }
+            }
+        });
+
+        // Handle Custom Search Input
+        $('#custom-search').on('keyup', function() {
+            table.search(this.value).draw();
+        });
+    });
+   </script>
+<!--END-->
+
+<!--SECTION ACTION BUTTON-->
+   <script>
+      $(document).ready(function() {
+         const sectionForm = document.getElementById('createSectionForm');
+         const sectionInput = document.getElementById('section_name');
+         const editIdInput = document.getElementById('edit_section_id');
+         const submitBtnText = document.getElementById('btnText');
+         const cancelBtn = document.getElementById('cancelEdit');
+
+          let deleteSectionId = null;
+
+         // ================= EDIT =================
+
+         // 1. POPULATE DATA ON EDIT CLICK
+         $(document).on('click', '.edit-section', function() {
+            // Get data from the DataTable row
+            let rowData = $('#sections-table').DataTable().row($(this).parents('row')).data();
+            
+            // If rowData is undefined (depends on DT config), fallback to finding the name in the closest <tr>
+            let sectionName = $(this).closest('tr').find('td:nth-child(2)').text();
+            let sectionId = $(this).data('id');
+
+            // Fill inputs
+            editIdInput.value = sectionId;
+            sectionInput.value = sectionName;
+
+            // Change UI to Update Mode
+            submitBtnText.innerText = 'Update';
+            cancelBtn.classList.remove('d-none');
+            sectionInput.focus();
+         });
+
+         // ================= DELETE CLICK =================
+         $(document).on('click', '.delete-section', function() {
+
+            deleteSectionId = $(this).data('id');
+
+            let sectionName = $(this).closest('tr').find('td:nth-child(2)').text();
+            $('#deleteSectionName').text(sectionName);
+
+            let modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            modal.show();
+         });
+
+         // ================= CONFIRM DELETE ==============================
+         $('#confirmDeleteBtn').on('click', function() {
+
+            if (!deleteSectionId) return;
+
+            axios.delete("{{ route('admin.academic.sections.destroy', ['section' => ':section']) }}"
+                        .replace(':section', deleteSectionId))
+            .then(response => {
+
+                  showToast('success', response.data.message);
+
+                  bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
+
+                  deleteSectionId = null;
+
+                  $('#sections-table').DataTable().ajax.reload(null, false);
+            })
+            .catch(error => {
+                  showToast('error', 'Delete failed!');
+            });
+         });
+
+         // ================= CANCEL EDIT ========================
+
+         // 2. CANCEL EDIT MODE
+         cancelBtn.addEventListener('click', function() {
+            sectionForm.reset();
+            editIdInput.value = '';
+            submitBtnText.innerText = 'Create';
+            this.classList.add('d-none');
+         });
+
+         // ================= CREATE / UPDATE ====================
+
+         // 3. HANDLE SUBMIT (CREATE OR UPDATE)
+         sectionForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let sectionId = editIdInput.value;
+            let section_name = sectionInput.value;
+            
+            // Determine if we are updating or creating
+            let url = sectionId 
+                  ? "{{ route('admin.academic.sections.update', ['section' => ':section']) }}".replace(':section', sectionId)
+                  : "{{ route('admin.academic.sections.store') }}";
+            
+            let method = sectionId ? 'put' : 'post';
+
+            axios({
+                  method: method,
+                  url: url,
+                  data: { section_name: section_name }
+            })
+            .then(response => {
+                  showToast('success', response.data.message || 'Saved successfully!');
+                  
+                  // Reset Form and UI
+                  sectionForm.reset();
+                  editIdInput.value = '';
+                  submitBtnText.innerText = 'Create';
+                  cancelBtn.classList.add('d-none');
+
+                  // Refresh the DataTable
+                  $('#sections-table').DataTable().ajax.reload(null, false);
+            })
+            .catch(error => {
+                  let message = error.response?.data?.errors?.section_name?.[0] || 'Something went wrong!';
+                  showToast('error', message);
+            });
+         });
+      });
+   </script>
+<!--ENDS-->   
    @endpush
 </x-app-layout>

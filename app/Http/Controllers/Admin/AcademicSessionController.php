@@ -72,10 +72,10 @@ class AcademicSessionController extends Controller
           try {
             DB::transaction(function () use ($session) {
                 $affected = AcademicSession::query()->update(['is_active' => false]);
-                \Log::info('Deactivated rows: ' . $affected);
+                // \Log::info('Deactivated rows: ' . $affected);
                 $result = $session->update(['is_active' => true]);
-                \Log::info('Activated result: ' . $result);
-                \Log::info('Session ID: ' . $session->id);
+                // \Log::info('Activated result: ' . $result);
+                // \Log::info('Session ID: ' . $session->id);
             });
 
             return response()->json([
@@ -85,7 +85,7 @@ class AcademicSessionController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Failed to activate session.',
-                'error'   => $e->getMessage()   // remove this line in production
+                'error' => app()->isProduction() ? null : $e->getMessage()
             ], 500);
         }
     }
