@@ -495,7 +495,7 @@
 
           let deleteSectionId = null;
 
-         // ================= EDIT =================
+         // ================= EDIT =====================================
 
          // 1. POPULATE DATA ON EDIT CLICK
          $(document).on('click', '.edit-section', function() {
@@ -516,7 +516,7 @@
             sectionInput.focus();
          });
 
-         // ================= DELETE CLICK =================
+         // ================= DELETE CLICK ===============================
          $(document).on('click', '.delete-section', function() {
 
             deleteSectionId = $(this).data('id');

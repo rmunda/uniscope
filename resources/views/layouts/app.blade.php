@@ -186,7 +186,7 @@ function showToast(type, message) {
     }[type];
 
     let toastEl = document.createElement('div');
-    toastEl.className = `toast align-items-center border-0`;
+    toastEl.className = 'toast align-items-center border-0 show';
     toastEl.role = 'alert';
 
     toastEl.style.backgroundColor = styles.bg;
@@ -206,14 +206,15 @@ function showToast(type, message) {
     container.prepend(toastEl);
 
     // OR To keep the newest at the bottom:
-    // container.appendChild(toastEl);
+    //container.appendChild(toastEl);
 
-    let toast = new bootstrap.Toast(toastEl, { delay: 3000 });
-    toast.show();
-
-    toastEl.addEventListener('hidden.bs.toast', () => {
-        toastEl.remove();
-    });
+    // Instantiate Bootstrap Toast and show it
+    // const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+    // toast.show();
+    setTimeout(() => toastEl.remove(), 3000);// tabler initializes bootstrap--> 'show' in div
+    // Remove from DOM after it hides
+    // toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+    toastEl.querySelector('.btn-close').onclick = () => toastEl.remove();
 }
 </script>
 
