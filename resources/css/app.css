@@ -6,11 +6,40 @@
 
 /* resources/css/app.css */
 
+.page-body {
+    overflow-x: hidden;
+}
+    
+/* Ensures cards don't force width on mobile */
+.card {
+    max-width: 100%;
+}
+
+/* Fix for DataTables inside Masonry */
+.dataTables_wrapper {
+    width: 100% !important;
+    overflow-x: hidden;
+}
+
 .page-title {
-    font-size: 30px;
+    font-size: 40px;
     font-weight: bold;
 }
 
+.navbar {
+    padding-left: 1.5rem !important;  /* Adjust as needed */
+    padding-right: 1.5rem !important; /* Adjust as needed */
+}
+
+.nav-link-title {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.nav-link-icon svg {
+    width: 26px;
+    height: 26px;
+}
 
 .nav-pills .nav-link {
     border-left: 3px solid transparent;
@@ -37,9 +66,24 @@
 }
 
 .sidebar {
-    border-right: 1px solid #e5e7eb; /* Soft gray border */
-    min-height: 100vh; /* Ensures the border goes all the way down */
+    width: 260px; /* Increased width */
+    flex-shrink: 0; /* Prevents the sidebar from collapsing in a flex container */
+    border-right: 1px solid #e5e7eb;
     background-color: #ffffff;
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    z-index: 10; /* Ensures it stays above background elements */
+    padding-left: 1.5rem !important;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem; /* Increase the 1rem to push text away from edges */
+    border-radius: 4px; /* Makes the active highlight look cleaner */
+    margin-bottom: 2px;
 }
 
 /* Flash message */
@@ -79,6 +123,19 @@
     align-items: center;
     padding-left: 0.75rem; /* Adjust based on your design */
     pointer-events: none;
+}
+
+/* Force pagination container to align right on all screens */
+.dataTables_wrapper .dataTables_paginate {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-top: 1rem !important;
+}
+
+/* Optional: If the "Showing X of Y entries" text is also moving around */
+.dataTables_wrapper .dataTables_info {
+    text-align: left !important;
+    margin-top: 1rem !important;
 }
 
 

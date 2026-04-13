@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AcademicClass extends Model
+class Subject extends Model
 {
-    /** @use HasFactory<\Database\Factories\AcademicClassFactory> */
+    /** @use HasFactory<\Database\Factories\Admin\SubjectFactory> */
     use HasFactory;
-    
-    /**
+
+     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
-     protected $fillable = ['class_name', 'is_active'];
-
+     protected $fillable = ['subject_name', 'is_active'];
 }

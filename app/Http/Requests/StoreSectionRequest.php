@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+//
+use Illuminate\Validation\Rule;
 
 class StoreSectionRequest extends FormRequest
 {
@@ -23,7 +25,12 @@ class StoreSectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'section_name' => 'required|max:50|unique:sections,section_name'
+            'section_name' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('sections', 'section_name'),
+            ],
         ];
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+//
+use Illuminate\Validation\Rule;
 
 class StoreAcademicSessionRequest extends FormRequest
 {
@@ -23,7 +25,12 @@ class StoreAcademicSessionRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'session_name' => 'required|unique:academic_sessions,session_name'
+             'session_name' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('academic_sessions', 'session_name'),
+            ],
         ];
     }
 }

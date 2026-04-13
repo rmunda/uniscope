@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAcademicSessionRequest;
-use App\Http\Requests\UpdateAcademicSessionRequest;
-use App\Models\Admin\AcademicSession;
-//
+use App\Models\Admin\Role;
+use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
+
+// --- ADD THIS LINE ---
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\DB; // ADD THIS LINE
 
-class AcademicSessionController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,25 +20,28 @@ class AcademicSessionController extends Controller
     {
         if ($request->ajax()) {
             // 1. Fetch the query
-            $data = AcademicSession::select(['id', 'session_name', 'is_active']);
+            $data = Role::select(['id', 'role_name']);
 
             // 2. Initialize Yajra Datatables
             return DataTables::of($data)
                 ->addIndexColumn() // Generates the '#' column automatically
-                ->addColumn('action', function ($row) {
+                ->addColumn('action', function($row) {
                     // 1. Generate URLs here using your named routes
-                    $deleteUrl = route('admin.academic.sessions.destroy', $row->id);
+                    $editUrl = route('admin.roles.update', $row->id);
+                    $deleteUrl = route('admin.roles.destroy', $row->id);
 
                     $btn = '<div class="btn-list flex-nowrap justify-content-end">';
+                    // Edit Button
+                    $btn .= '<button class="btn btn-outline-success btn-xxs btn-icon edit-role" data-id="'.$row->id.'" data-url="'.$editUrl.'">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
+                             </button>';
 
-                    // 2. Embed into the Edit Button (using href if it's a link, or data-url for AJAX)
                     // Delete Button
-                    $btn .= '<button class="btn btn-outline-danger btn-xxs btn-icon delete-session" data-id="'.$row->id.'" data-url="'.$deleteUrl.'">
+                    $btn .= '<button class="btn btn-outline-danger btn-xxs btn-icon delete-role" data-id="'.$row->id.'" data-url="'.$deleteUrl.'">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                              </button>';
 
                     $btn .= '</div>';
-
                     return $btn;
                 })
                 ->rawColumns(['action']) // Essential to render the HTML buttons
@@ -63,36 +66,36 @@ class AcademicSessionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAcademicSessionRequest $request)
+    public function store(StoreRoleRequest $request)
     {
         try {
-            $session = AcademicSession::create([
-                'session_name' => $request->session_name,
+            $role = Role::create([
+                'role_name' => $request->role_name,
             ]);
 
             return response()->json([
                 'success' => true,
-                'message' => 'New academic session created successfully',
-                'data' => $session,
+                'message' => 'New role created successfully',
+                'data' => $role,
             ]);
+
         } catch (\Exception $e) {
-            \Log::error('Failed to add session', [
-                'session_name' => $requets->session_name,
+            \Log::error('Failed to add role', [
+                'role_name' => $request->role_name,
                 'error' => $e->getMessage(),
             ]);
 
             return response()->json([
-                'message' => 'Failed to add session',
+                'message' => 'Failed to add role',
                 'error' => app()->isProduction() ? null : $e->getMessage(),
             ], 500);
         }
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(AcademicSession $session)
+    public function show(Role $role)
     {
         //
     }
@@ -100,7 +103,7 @@ class AcademicSessionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AcademicSession $session)
+    public function edit(Role $role)
     {
         //
     }
@@ -108,27 +111,25 @@ class AcademicSessionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAcademicSessionRequest $request, AcademicSession $session)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
         try {
-            DB::transaction(function () use ($session) {
-                $affected = AcademicSession::query()->update(['is_active' => false]);
-                // \Log::info('Deactivated rows: ' . $affected);
-                $result = $session->update(['is_active' => true]);
-                // \Log::info('Activated result: ' . $result);
-                // \Log::info('Session ID: ' . $session->id);
-            });
-
-            return response()->json([
-                'message' => 'Session activated successfully!',
+            $role->update([
+                'role_name' => $request->role_name,
             ]);
 
-        } catch (\Exception $e) {
-            \log::error('Failed to activate session', [
-                'session_id' => $session->id]);
-
             return response()->json([
-                'message' => 'Failed to activate session.',
+                'message' => 'Role updated successfully!',
+                'data' => $role->fresh(),
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Failed to update role', [
+                'role_id' => $role->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response() - json([
+                'message' => 'Failed to update roel',
                 'error' => app()->isProduction() ? null : $e->getMessage(),
             ], 500);
         }
@@ -137,38 +138,22 @@ class AcademicSessionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AcademicSession $session)
+    public function destroy(Role $role)
     {
         try {
-            // Safety: prevent deleting active session
-            if ($session->is_active) {
-                return response()->json([
-                    'message' => 'Cannot delete active session'
-                ], 400);
-            }
-
-            // Extra safety: ensure model actually exists
-            if (!$session->exists) {
-                return response()->json([
-                    'message' => 'Session not found'
-                ], 404);
-            }
-
-            $session->delete();
+            $role->delete();
 
             return response()->json([
-                'message' => 'Session deleted successfully'
+                'message' => 'Role deleted successfully!',
             ]);
-
         } catch (\Exception $e) {
-
-            \Log::error('Failed to delete session', [
-                'session_id' => $session->id ?? null,
+            \Log::error('Failed to delete role', [
+                'class_id' => $academicClass->id,
                 'error' => $e->getMessage(),
             ]);
 
-            return response()->json([
-                'message' => 'Failed to delete session',
+            return response() - json([
+                'message' => 'Failed to delete role',
                 'error' => app()->isProduction() ? null : $e->getMessage(),
             ], 500);
         }

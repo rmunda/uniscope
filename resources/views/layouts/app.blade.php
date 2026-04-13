@@ -44,6 +44,7 @@
             align-items: center;
         }
     </style>
+    @stack('styles') {{-- add this line --}}
 </head>
 <body class="overflow-hidden">
     <div class="page">
@@ -51,28 +52,29 @@
         @include('partials.header')
 
         <div class="page-wrapper">
-            <div class="container-fluid">
-                <div class="row g-4">
-                    <div class="col-2 d-none d-md-block">
-                        {{-- SIDEBAR --}}
+            <div class="container-fluid p-0"> 
+                <div class="row g-0"> 
+                    <aside class="col-md-2 d-none d-md-block border-end" style="height: calc(100vh - 60px); background: #ffffff;">
                         @include('partials.sidebar')
-                    </div>
+                    </aside>
 
-                    <main class="col-md-10 " style="overflow-y: auto; height: calc(100vh - 56px); padding-right: 20px; background-color: #f6f8fb;">
-                            {{-- PAGE HEADER --}}
-                            @isset($header)
-                                <div class="page-header d-print-none">                                    
-                                    {{ $header }}                                    
-                                </div>
-                            @endisset
+                    <main class="col-md-10 pt-0 mb-0" style="overflow-y: auto; height: calc(100vh - 60px); background-color: #f6f8fb;">
+                        {{-- PAGE HEADER --}}
+                        @isset($header)
+                            <div class="page-header d-print-none">                                    
+                                {{ $header }}                                    
+                            </div>
+                        @endisset
+                        
                         <div class="page-body">                       
                             {{ $slot }}
                         </div>
                     </main>
+
                 </div>
             </div>
-
-            @include('partials.footer')
+            {{-- Footer moved inside main or kept bottom depending on preference --}}
+            {{-- @include('partials.footer') --}}
         </div>
     </div>
 
@@ -135,7 +137,7 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" async></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" async></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var grid = document.querySelector('.row-cards');
@@ -144,7 +146,7 @@
             percentPosition: true
         });
     });
-</script>
+</script> -->
 
 <!-- <script>
     $(document).ready(function () {

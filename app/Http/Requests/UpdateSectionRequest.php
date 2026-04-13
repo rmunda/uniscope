@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+//
+use Illuminate\Validation\Rule;
 
 class UpdateSectionRequest extends FormRequest
 {
@@ -22,8 +24,16 @@ class UpdateSectionRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Get the ID from the route parameter
+        // If $this->route('section') returns an object, we take the id.
+        $section = $this->route('section');
+        $sectionId = is_object($section) ? $section->id : $section;
         return [
-            'section_name' => 'required|max:50|unique:sections,section_name'
+            'section_name' => [
+                'required',
+                'max:50',
+                Rule::unique('sections', 'section_name')->ignore($sectionId),
+            ],
         ];
     }
 }

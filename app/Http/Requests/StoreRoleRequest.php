@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 //
 use Illuminate\Validation\Rule;
 
-class UpdateAcademicClassRequest extends FormRequest
+class StoreRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,12 @@ class UpdateAcademicClassRequest extends FormRequest
      */
     public function rules(): array
     {
-        $classId = $this->route('class'); 
-
         return [
-           'class_name' => [
-                'required', 
-                'max:50', 
-                // Laravel handles $this->route('class') whether it's an ID or an Object
-                Rule::unique('academic_classes')->ignore($this->route('class'))
+            'role_name' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('roles', 'role_name'),
             ],
         ];
     }

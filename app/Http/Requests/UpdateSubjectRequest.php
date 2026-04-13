@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+//
+use Illuminate\Validation\Rule;
 
 class UpdateSubjectRequest extends FormRequest
 {
@@ -12,7 +14,7 @@ class UpdateSubjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,8 +24,16 @@ class UpdateSubjectRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Capture the ID from the URL (e.g., /subjects/5)
+        $subjectId = $this->route('subject'); 
+
         return [
-            //
+           'subject_name' => [
+                'required', 
+                'max:50', 
+                // Laravel handles $this->route('subject') whether it's an ID or an Object
+                Rule::unique('subjects')->ignore($this->route('subject'))
+            ],
         ];
     }
 }
