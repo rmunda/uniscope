@@ -2,14 +2,11 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- Tabler already via Vite --}}
     
     {{-- DataTables CSS --}}
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
     <style>
-        /* Tabler-style DataTables */
-
         .dataTables_filter input {
             border: 1px solid #dadcdf;
             border-radius: 6px;
@@ -44,183 +41,128 @@
             align-items: center;
         }
     </style>
-    @stack('styles') {{-- add this line --}}
+
+    @stack('styles')
 </head>
-<body class="overflow-hidden">
-    <div class="page">
-        {{-- NAVBAR --}}
-        @include('partials.header')
 
-        <div class="page-wrapper">
-            <div class="container-fluid p-0"> 
-                <div class="row g-0"> 
-                    <aside class="col-md-2 d-none d-md-block border-end" style="height: calc(100vh - 60px); background: #ffffff;">
-                        @include('partials.sidebar')
-                    </aside>
+<body>
+<div class="page">
+<div class="page-wrapper">
+<div class="container-fluid p-0">
+<div class="row g-0">
 
-                    <main class="col-md-10 pt-0 mb-0" style="overflow-y: auto; height: calc(100vh - 60px); background-color: #f6f8fb;">
-                        {{-- PAGE HEADER --}}
-                        @isset($header)
-                            <div class="page-header d-print-none">                                    
-                                {{ $header }}                                    
-                            </div>
-                        @endisset
-                        
-                        <div class="page-body">                       
-                            {{ $slot }}
-                        </div>
-                    </main>
+    {{-- DESKTOP SIDEBAR --}}
+    <aside class="col-md-2 d-none d-md-block border-end"
+           style="position: sticky; top: 0; height: 100vh; background: #ffffff;">
+        @include('partials.sidebar')
+    </aside>
 
-                </div>
-            </div>
-            {{-- Footer moved inside main or kept bottom depending on preference --}}
-            {{-- @include('partials.footer') --}}
+    {{-- MOBILE OFFCANVAS SIDEBAR --}}
+    <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar"
+         style="width: 260px;">
+        <div class="offcanvas-body p-0">
+            @include('partials.sidebar')
         </div>
     </div>
 
-{{-- FLASH TOAST --}}
-<!-- <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
-    
-    @if(session('success'))
-        <div class="toast align-items-center text-bg-success border-0 show" role="alert">
-            <div class="d-flex">
-                <div class="toast-body">
-                    {{ session('success') }}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
+    {{-- MAIN CONTENT --}}
+    <main class="col-md-10 col-12 pt-0 mb-0"
+          style="overflow-y: auto; height: 100vh; background-color: #f6f8fb;">
+
+        {{-- MOBILE TOPBAR --}}
+        <div class="d-flex d-md-none align-items-center px-3 py-2 border-bottom bg-white">
+            <button class="btn btn-sm btn-outline-secondary" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+            </button>
+            <span class="ms-3 fw-bold">Uniscope</span>
         </div>
-    @endif
 
-    @if(session('error'))
-        <div class="toast align-items-center text-bg-danger border-0 show" role="alert">
-            <div class="d-flex">
-                <div class="toast-body">
-                    {{ session('error') }}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        {{-- PAGE HEADER --}}
+        @isset($header)
+            <div class="page-header d-print-none">
+                {{ $header }}
             </div>
+        @endisset
+
+        {{-- PAGE CONTENT --}}
+        <div class="page-body">
+            {{ $slot }}
         </div>
-    @endif
 
-    @if(session('warning'))
-        <div class="toast align-items-center text-bg-warning border-0 show" role="alert">
-            <div class="d-flex">
-                <div class="toast-body text-dark">
-                    {{ session('warning') }}
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
-    @endif
+    </main>
 
-    @if(session('info'))
-        <div class="toast align-items-center text-bg-info border-0 show" role="alert">
-            <div class="d-flex">
-                <div class="toast-body">
-                    {{ session('info') }}
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
-    @endif
-
-</div> -->
-
-{{-- ✅ GLOBAL TOAST CONTAINER --}}
-<div class="toast-container position-fixed end-0 p-3" 
-     style="top: 50px; z-index: 9999; display: flex; flex-direction: column; gap: 4px;">
+</div>
+</div>
+</div>
 </div>
 
-{{-- JS --}}
+{{-- TOAST CONTAINER --}}
+<div class="toast-container position-fixed end-0 p-3"
+     style="top: 16px; z-index: 9999; display: flex; flex-direction: column; gap: 4px;">
+</div>
+
+{{-- JS (UNCHANGED) --}}
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" async></script>
+{{-- TOAST FUNCTION --}}
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var grid = document.querySelector('.row-cards');
-        var msnry = new Masonry(grid, {
-            itemSelector: '.col-sm-12', // Matches your column class
-            percentPosition: true
-        });
-    });
-</script> -->
+    function showToast(type, message) {
+        let container = document.querySelector('.toast-container');
 
-<!-- <script>
-    $(document).ready(function () {
-        $('.toast').each(function () {
-            let toast = new bootstrap.Toast(this, {
-                delay: 3000
-            });
-            toast.show();
-        });
-    });
-</script> -->
+        let styles = {
+            success: {
+                bg: 'var(--tblr-success-lt)',
+                color: 'var(--tblr-success)',
+                border: 'var(--tblr-success)'
+            },
+            error: {
+                bg: 'var(--tblr-danger-lt)',
+                color: 'var(--tblr-danger)',
+                border: 'var(--tblr-danger)'
+            },
+            warning: {
+                bg: 'var(--tblr-warning-lt)',
+                color: 'var(--tblr-warning)',
+                border: 'var(--tblr-warning)'
+            },
+            info: {
+                bg: 'var(--tblr-primary-lt)',
+                color: 'var(--tblr-primary)',
+                border: 'var(--tblr-primary)'
+            }
+        }[type];
 
-{{-- ✅ UNIFIED TOAST FUNCTION --}}
-<script>
-function showToast(type, message) {
-    let container = document.querySelector('.toast-container');
+        let toastEl = document.createElement('div');
+        toastEl.className = 'toast align-items-center border-0 show';
+        toastEl.role = 'alert';
+        toastEl.style.backgroundColor = styles.bg;
+        toastEl.style.color = styles.color;
+        toastEl.style.borderLeft = `4px solid ${styles.border}`;
+        toastEl.style.marginBottom = '5px';
 
-    let styles = {
-        success: {
-            bg: 'var(--tblr-success-lt)',
-            color: 'var(--tblr-success)',
-            border: 'var(--tblr-success)'
-        },
-        error: {
-            bg: 'var(--tblr-danger-lt)',
-            color: 'var(--tblr-danger)',
-            border: 'var(--tblr-danger)'
-        },
-        warning: {
-            bg: 'var(--tblr-warning-lt)',
-            color: 'var(--tblr-warning)',
-            border: 'var(--tblr-warning)'
-        },
-        info: {
-            bg: 'var(--tblr-primary-lt)',
-            color: 'var(--tblr-primary)',
-            border: 'var(--tblr-primary)'
-        }
-    }[type];
-
-    let toastEl = document.createElement('div');
-    toastEl.className = 'toast align-items-center border-0 show';
-    toastEl.role = 'alert';
-
-    toastEl.style.backgroundColor = styles.bg;
-    toastEl.style.color = styles.color;
-    toastEl.style.borderLeft = `4px solid ${styles.border}`;
-    toastEl.style.marginBottom = '5px';
-
-    toastEl.innerHTML = `
-        <div class="d-flex">
-            <div class="toast-body">
-                ${message}
+        toastEl.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
             </div>
-            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
-        </div>
-    `;
-    // To make the newest toast appear at the top:
-    container.prepend(toastEl);
+        `;
 
-    // OR To keep the newest at the bottom:
-    //container.appendChild(toastEl);
-
-    // Instantiate Bootstrap Toast and show it
-    // const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
-    // toast.show();
-    setTimeout(() => toastEl.remove(), 3000);// tabler initializes bootstrap--> 'show' in div
-    // Remove from DOM after it hides
-    // toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
-    toastEl.querySelector('.btn-close').onclick = () => toastEl.remove();
-}
+        container.prepend(toastEl);
+        setTimeout(() => toastEl.remove(), 3000);
+        toastEl.querySelector('.btn-close').onclick = () => toastEl.remove();
+    }
 </script>
 
-{{-- ✅ BLADE → JS FLASH MESSAGE BRIDGE --}}
+{{-- BLADE FLASH MESSAGE BRIDGE --}}
 <script>
     @if(session('success'))
         showToast('success', "{{ session('success') }}");
@@ -239,24 +181,21 @@ function showToast(type, message) {
     @endif
 </script>
 
-{{-- ✅ OPTIONAL: GLOBAL AXIOS ERROR HANDLER --}}
+{{-- AXIOS ERROR HANDLER --}}
 <script>
-if (window.axios) {
-    axios.interceptors.response.use(
-        response => response,
-        error => {
-            let message = 'Something went wrong!';
-
-            if (error.response?.data?.message) {
-                message = error.response.data.message;
+    if (window.axios) {
+        axios.interceptors.response.use(
+            response => response,
+            error => {
+                let message = 'Something went wrong!';
+                if (error.response?.data?.message) {
+                    message = error.response.data.message;
+                }
+                showToast('error', message);
+                return Promise.reject(error);
             }
-
-            showToast('error', message);
-
-            return Promise.reject(error);
-        }
-    );
-}
+        );
+    }
 </script>
 
 @stack('scripts')

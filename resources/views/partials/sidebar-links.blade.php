@@ -1,124 +1,92 @@
-<ul class="nav nav-pills flex-column">
-    <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-            <span class="nav-link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="5 12 3 12 12 3 21 12 19 12" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
-            </span>
-            <span class="nav-link-title">Dashboard</span>
-        </a>
-    </li>
+{{-- MAIN --}}
+<p class="sidebar-section-title">MAIN</p>
+
+<ul class="nav flex-column sidebar-nav">
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
-            <span class="nav-link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="9" cy="7" r="4" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
-            </span>
-            <span class="nav-link-title">Students</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <span class="nav-link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 5h8" /><path d="M13 9h5" /><path d="M13 15h8" /><path d="M13 19h5" /><rect x="3" y="4" width="6" height="6" rx="1" /><rect x="3" y="14" width="6" height="6" rx="1" /></svg>
-            </span>
-            <span class="nav-link-title">Teachers</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <span class="nav-link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="Copy-Paste-1--Streamline-Ultimate" height="24" width="24">
+        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+           href="{{ route('dashboard') }}">
+            <span class="sidebar-icon svg-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="App-Window-Pie-Chart--Streamline-Ultimate">
                     <desc>
-                        Copy Paste 1 Streamline Icon: https://streamlinehq.com
+                        App Window Pie Chart Streamline Icon: https://streamlinehq.com
                     </desc>
-                    <path fill="#ffdda1" d="M17.858 3.7014c0.1282 0 0.2552 0.0253 0.3736 0.0744s0.2261 0.1209 0.3168 0.2116c0.0906 0.0907 0.1626 0.1983 0.2116 0.3167 0.0491 0.1185 0.0743 0.2454 0.0743 0.3737V21.275c0 0.2589 -0.1028 0.5072 -0.2859 0.6904 -0.1831 0.183 -0.4315 0.2858 -0.6904 0.2858H2.2371c-0.2589 0 -0.5072 -0.1028 -0.6903 -0.2858 -0.1831 -0.1832 -0.286 -0.4315 -0.286 -0.6904V4.6778c0 -0.259 0.1029 -0.5073 0.286 -0.6904 0.1831 -0.1831 0.4314 -0.286 0.6903 -0.286H17.858Z" stroke-width="1"></path>
-                    <path fill="#ffbc44" d="M14.441 6.1422c0 0.259 -0.1029 0.5073 -0.286 0.6904 -0.1831 0.1831 -0.4315 0.2859 -0.6904 0.2859H6.6305c-0.1282 0 -0.2552 -0.0252 -0.3736 -0.0743 -0.1185 -0.0491 -0.2261 -0.121 -0.3167 -0.2116s-0.1626 -0.1983 -0.2117 -0.3168c-0.049 -0.1184 -0.0743 -0.2454 -0.0743 -0.3736V3.7014h8.7868v2.4408Z" stroke-width="1"></path>
-                    <path fill="#ffbc44" d="M17.8577 22.2512c0.2589 0 0.5073 -0.1028 0.6904 -0.2859s0.2859 -0.4315 0.2859 -0.6904V8.5829h-7.3223c-0.2589 0 -0.5073 0.1029 -0.6903 0.286s-0.286 0.4314 -0.286 0.6903v12.692h7.3223Z" stroke-width="1"></path>
-                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M10.0476 22.2512H2.2371c-0.1282 0 -0.2551 -0.0252 -0.3736 -0.0742 -0.1184 -0.0491 -0.2261 -0.121 -0.3167 -0.2116 -0.1831 -0.1832 -0.286 -0.4315 -0.286 -0.6904V4.6778c0 -0.259 0.1029 -0.5073 0.286 -0.6904 0.1831 -0.1831 0.4314 -0.286 0.6903 -0.286h3.9053" stroke-width="1"></path>
-                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M13.9526 3.7014h3.9053c0.1281 0 0.2551 0.0253 0.3736 0.0744 0.1184 0.049 0.226 0.1209 0.3167 0.2116 0.0907 0.0907 0.1626 0.1983 0.2117 0.3167 0.049 0.1185 0.0742 0.2454 0.0742 0.3737v3.417" stroke-width="1"></path>
-                    <path fill="#e4f1f5" stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M11.9998 2.7251c0 -0.2564 -0.0504 -0.5103 -0.1485 -0.7472 -0.0982 -0.2369 -0.242 -0.4521 -0.4234 -0.6335 -0.1813 -0.1813 -0.3965 -0.3251 -0.6334 -0.4232 -0.237 -0.0982 -0.4908 -0.1487 -0.7473 -0.1487 -0.2564 0 -0.5103 0.0505 -0.7472 0.1487 -0.2369 0.0981 -0.4522 0.2419 -0.6335 0.4232 -0.1813 0.1814 -0.3251 0.3966 -0.4233 0.6335 -0.0981 0.2369 -0.1486 0.4908 -0.1486 0.7472H6.142v2.929h7.8104v-2.929h-1.9526Z" stroke-width="1"></path>
-                    <path fill="#ffffff" stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M22.7392 22.2512c0 0.259 -0.1028 0.5072 -0.2859 0.6903 -0.1832 0.1831 -0.4314 0.286 -0.6904 0.286h-8.7867c-0.2589 0 -0.5073 -0.1029 -0.6904 -0.286s-0.286 -0.4313 -0.286 -0.6903V11.0237c0 -0.2589 0.1029 -0.5073 0.286 -0.6904s0.4315 -0.286 0.6904 -0.286h6.9181c0.2589 0.0001 0.5072 0.103 0.6903 0.2861l1.8686 1.8687c0.1831 0.183 0.286 0.4313 0.286 0.6902v9.3589Z" stroke-width="1"></path>
-                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M14.9288 14.4407h4.8815" stroke-width="1"></path>
-                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M14.9288 17.3696h4.8815" stroke-width="1"></path>
+                    <path fill="#66e1ff" d="M23 7.21548V19.6503c0 0.5073 -0.2015 0.9939 -0.5603 1.3527s-0.8454 0.5603 -1.3527 0.5603H2.91304c-0.50736 0 -0.99396 -0.2015 -1.35272 -0.5603C1.20155 20.6442 1 20.1576 1 19.6503V7.21548h22Z" stroke-width="1"></path>
+                    <path fill="#c2f3ff" d="M2.91304 21.5633h1.91305L19.1739 7.21548H1V19.6503c0 0.5073 0.20155 0.9939 0.56032 1.3527 0.35876 0.3588 0.84536 0.5603 1.35272 0.5603Z" stroke-width="1"></path>
+                    <path fill="#78eb7b" d="M12.9564 14.3893c0.0007 -0.778 -0.1888 -1.5445 -0.5519 -2.2326 -0.3631 -0.6882 -0.8888 -1.2772 -1.5314 -1.7159l-2.69927 3.9485 3.06567 3.6702c0.5379 -0.4483 0.9707 -1.0095 1.2675 -1.6437 0.2967 -0.6344 0.4501 -1.3261 0.4494 -2.0265Z" stroke-width="1"></path>
+                    <path fill="#ffbfc5" d="M10.873 10.4409c-0.7185 -0.49129 -1.55753 -0.77716 -2.42655 -0.82679 -0.86902 -0.04964 -1.73512 0.13883 -2.50493 0.54509 -0.76982 0.4063 -1.41416 1.0149 -1.8636 1.7604 -0.44943 0.7454 -0.68689 1.5994 -0.68681 2.4698h4.78261l2.69928 -3.9485Z" stroke-width="1"></path>
+                    <path fill="#ffef5e" d="M3.39111 14.3894c0.00013 0.9094 0.25953 1.7999 0.74777 2.5671 0.48825 0.7672 1.18512 1.3793 2.00888 1.7645 0.82377 0.3853 1.74029 0.5276 2.6421 0.4105 0.9018 -0.1171 1.75154 -0.489 2.44954 -1.0719l-3.06568 -3.6702H3.39111Z" stroke-width="1"></path>
+                    <path fill="#ffffff" d="M23 6.73723H1V3.86766c0 -0.50736 0.20155 -0.99396 0.56032 -1.35272 0.35876 -0.35877 0.84536 -0.56032 1.35272 -0.56032H21.087c0.5073 0 0.9939 0.20155 1.3527 0.56032 0.3588 0.35876 0.5603 0.84536 0.5603 1.35272v2.86957Z" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M21.087 1.95831H2.91304C1.8565 1.95831 1 2.81481 1 3.87136V20.1322c0 1.0566 0.8565 1.913 1.91304 1.913H21.087c1.0565 0 1.913 -0.8564 1.913 -1.913V3.87136c0 -1.05655 -0.8565 -1.91305 -1.913 -1.91305Z" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M1 6.74109h22" stroke-width="1"></path>
+                    <path stroke="#191919" d="M10.0868 4.58504c-0.13208 0 -0.23914 -0.10706 -0.23914 -0.23913 0 -0.13207 0.10706 -0.23913 0.23914 -0.23913" stroke-width="1"></path>
+                    <path stroke="#191919" d="M10.0864 4.58504c0.1321 0 0.2392 -0.10706 0.2392 -0.23913 0 -0.13207 -0.1071 -0.23913 -0.2392 -0.23913" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M8.17372 19.1758c2.64138 0 4.78258 -2.1411 4.78258 -4.7826 0 -2.6413 -2.1412 -4.78254 -4.78258 -4.78254 -2.64136 0 -4.78261 2.14124 -4.78261 4.78254 0 2.6415 2.14125 4.7826 4.78261 4.7826Z" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="m10.8722 10.4447 -2.69837 3.9485 3.06567 3.6702" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M8.17372 14.3932H3.39111" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M14.8696 10.5671h5.7392" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M14.8696 13.4367h5.7392" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M14.8696 16.3063h5.7392" stroke-width="1"></path>
+                    <path stroke="#191919" d="M4.34753 4.58892c-0.13207 0 -0.23913 -0.10707 -0.23913 -0.23913 0 -0.13207 0.10706 -0.23913 0.23913 -0.23913" stroke-width="1"></path>
+                    <path stroke="#191919" d="M4.34766 4.58892c0.13206 0 0.23913 -0.10707 0.23913 -0.23913 0 -0.13207 -0.10707 -0.23913 -0.23913 -0.23913" stroke-width="1"></path>
+                    <path stroke="#191919" d="M7.21716 4.59276c-0.13207 0 -0.23913 -0.10706 -0.23913 -0.23913 0 -0.13206 0.10706 -0.23913 0.23913 -0.23913" stroke-width="1"></path>
+                    <path stroke="#191919" d="M7.21729 4.59276c0.13206 0 0.23913 -0.10706 0.23913 -0.23913 0 -0.13206 -0.10707 -0.23913 -0.23913 -0.23913" stroke-width="1"></path>
+                    </svg>
+            </span>
+            Dashboard
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.students.*') ? 'active' : '' }}" href="#">
+            <span class="sidebar-icon svg-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="Single-Neutral-Circle--Streamline-Ultimate" height="24" width="24">
+                    <desc>
+                        Single Neutral Circle Streamline Icon: https://streamlinehq.com
+                    </desc>
+                    <path fill="#c2f3ff" d="M12.0001 23c6.0733 0 10.9972 -4.9239 10.9972 -10.9972 0 -6.07331 -4.9239 -10.99718 -10.9972 -10.99718 -6.07329 0 -10.99717 4.92387 -10.99717 10.99718C1.00293 18.0761 5.92681 23 12.0001 23Z" stroke-width="1"></path>
+                    <path fill="#66e1ff" d="M12.0001 5.55652c2.5213 0.00022 4.9658 0.86676 6.9244 2.45446 1.9585 1.5877 3.312 3.80012 3.8338 6.26682 0.3396 -1.6021 0.3171 -3.2599 -0.0659 -4.85222s-1.1167 -3.079 -2.1477 -4.35147c-1.031 -1.27248 -2.3332 -2.29861 -3.8115 -3.00347C15.2549 1.36579 13.6379 1 12.0001 1c-1.6377 0 -3.25475 0.36579 -4.73303 1.07064 -1.47829 0.70486 -2.78048 1.73099 -3.81148 3.00347 -1.031 1.27247 -1.76478 2.75915 -2.14776 4.35147C0.924863 11.0179 0.902371 12.6757 1.242 14.2778c0.52178 -2.4667 1.87528 -4.67912 3.8338 -6.26682 1.95851 -1.5877 4.4031 -2.45424 6.9243 -2.45446Z" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M12.0001 23c6.0733 0 10.9972 -4.9239 10.9972 -10.9972 0 -6.07331 -4.9239 -10.99718 -10.9972 -10.99718 -6.07329 0 -10.99717 4.92387 -10.99717 10.99718C1.00293 18.0761 5.92681 23 12.0001 23Z" stroke-width="1"></path>
+                    <path fill="#ffdda1" d="M12.0005 9.61208c0.8242 0 1.6148 -0.32744 2.1976 -0.91029 0.5828 -0.58284 0.9103 -1.37335 0.9103 -2.19762 0 -0.82426 -0.3275 -1.61477 -0.9103 -2.19762 -0.5828 -0.58284 -1.3734 -0.91028 -2.1976 -0.91028 -0.8243 0 -1.6148 0.32744 -2.19764 0.91028 -0.58284 0.58285 -0.91028 1.37336 -0.91028 2.19762 0 0.82427 0.32744 1.61478 0.91028 2.19762 0.58284 0.58285 1.37334 0.91029 2.19764 0.91029Z" stroke-width="1"></path>
+                    <path fill="#ffffff" d="m13.9561 20.6093 0.4351 -2.3907h1.9126v-2.8688c0 -1.1413 -0.4534 -2.2359 -1.2604 -3.0429 -0.807 -0.807 -1.9016 -1.2604 -3.0429 -1.2604s-2.23583 0.4534 -3.04284 1.2604c-0.80702 0.807 -1.26039 1.9016 -1.26039 3.0429v2.8688h1.91255l0.43508 2.3907" stroke-width="1"></path>
+                    <path fill="#ffdda1" d="M12.0005 5.30883c0.655 0.00133 1.2927 0.21033 1.8214 0.59694s0.9212 0.93093 1.121 1.55468c0.1052 -0.30792 0.1617 -0.63114 0.1655 -0.95628 0 -0.82426 -0.3275 -1.61477 -0.9103 -2.19762 -0.5828 -0.58284 -1.3734 -0.91028 -2.1976 -0.91028 -0.8243 0 -1.6148 0.32744 -2.19764 0.91028 -0.58284 0.58285 -0.91028 1.37336 -0.91028 2.19762 0.00382 0.32514 0.06024 0.64836 0.16543 0.95628 0.19986 -0.62375 0.59236 -1.16807 1.12109 -1.55468 0.5287 -0.38661 1.1664 -0.59561 1.8214 -0.59694Z" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M12.0005 9.61208c0.8242 0 1.6148 -0.32744 2.1976 -0.91029 0.5828 -0.58284 0.9103 -1.37335 0.9103 -2.19762 0 -0.82426 -0.3275 -1.61477 -0.9103 -2.19762 -0.5828 -0.58284 -1.3734 -0.91028 -2.1976 -0.91028 -0.8243 0 -1.6148 0.32744 -2.19764 0.91028 -0.58284 0.58285 -0.91028 1.37336 -0.91028 2.19762 0 0.82427 0.32744 1.61478 0.91028 2.19762 0.58284 0.58285 1.37334 0.91029 2.19764 0.91029Z" stroke-width="1"></path>
+                    <path fill="#ffffff" d="M12.0005 11.0465c-1.1413 0 -2.23583 0.4534 -3.04284 1.2604 -0.80702 0.807 -1.26039 1.9016 -1.26039 3.0429v1.9125c0 -0.5651 0.1113 -1.1247 0.32756 -1.6468s0.53324 -0.9964 0.93283 -1.396c0.39959 -0.3996 0.87398 -0.7166 1.39604 -0.9329 0.5221 -0.2162 1.0817 -0.3275 1.6468 -0.3275 0.5651 0 1.1247 0.1113 1.6468 0.3275 0.5221 0.2163 0.9965 0.5333 1.3961 0.9329 0.3996 0.3996 0.7165 0.8739 0.9328 1.396 0.2163 0.5221 0.3276 1.0817 0.3276 1.6468v-1.9125c0 -1.1413 -0.4534 -2.2359 -1.2604 -3.0429 -0.807 -0.807 -1.9016 -1.2604 -3.0429 -1.2604Z" stroke-width="1"></path>
+                    <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="m13.9561 20.6093 0.4351 -2.3907h1.9126v-2.8688c0 -1.1413 -0.4534 -2.2359 -1.2604 -3.0429 -0.807 -0.807 -1.9016 -1.2604 -3.0429 -1.2604s-2.23583 0.4534 -3.04284 1.2604c-0.80702 0.807 -1.26039 1.9016 -1.26039 3.0429v2.8688h1.91255l0.43508 2.3907" stroke-width="1"></path>
                 </svg>
             </span>
-            <span class="nav-link-title">Exams</span>
+            Students
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
-            <span class="nav-link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M4 16h6" /><path d="M14 12v4" /><path d="M14 7l3 3l3 -3" /><path d="M4 12h10" /><path d="M4 20h16" /></svg>
+        <a class="nav-link {{ request()->routeIs('admin.teachers.*') ? 'active' : '' }}" href="#">
+            <span class="sidebar-icon svg-lg">
+                <img src="{{ Vite::asset('resources/images/teacher.png') }}">
             </span>
-            <span class="nav-link-title">Class</span>
+            Teachers
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('admin.academic.settings') ? 'active' : '' }}" href="{{ route('admin.academic.settings') }}">
-            <span class="nav-link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tool"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" /></svg>
-            </span>
-            <span class="nav-link-title">Configure</span>
-        </a>
-    </li>
+        <a class="nav-link d-flex justify-content-between align-items-center"
+           data-bs-toggle="collapse"
+           href="#examsMenu">
 
-    <li class="nav-item">
-        <a class="nav-link d-flex align-items-center justify-content-between"
-        data-bs-toggle="collapse"
-        href="#examsMenu"
-        role="button"
-        aria-expanded="false"
-        aria-controls="examsMenu">
-
-            <!-- Left: Icon + Text -->
-            <div class="d-flex align-items-center">
-                <span class="nav-link-icon me-2">
-                    <!-- icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="Paper-Write--Streamline-Ultimate" height="24" width="24">
-                        <desc>
-                            Paper Write Streamline Icon: https://streamlinehq.com
-                        </desc>
-                        <path fill="#ffdda1" d="M17.0506 4.20831c0.2431 0 0.4763 0.09658 0.6482 0.26849 0.172 0.17191 0.2685 0.40506 0.2685 0.64818V21.625c0 0.2431 -0.0965 0.4763 -0.2685 0.6482 -0.1719 0.1718 -0.4051 0.2684 -0.6482 0.2684H2.38395c-0.24312 0 -0.47627 -0.0966 -0.64818 -0.2684 -0.17191 -0.1719 -0.26848 -0.4051 -0.26848 -0.6482V5.12498c0 -0.24312 0.09657 -0.47627 0.26848 -0.64818 0.17191 -0.17191 0.40506 -0.26849 0.64818 -0.26849H17.0506Z" stroke-width="1"></path>
-                        <path fill="#ffbc44" d="m17.9676 14.0358 -2.6253 1.2238 -1.958 2.7014 3.3284 0.2365 1.2549 -0.5858v-3.5759Z" stroke-width="1"></path>
-                        <path fill="#ffbc44" d="M14.7498 6.95831c0 0.24312 -0.0966 0.47628 -0.2685 0.64819 -0.1718 0.1719 -0.405 0.26848 -0.6481 0.26848H5.58317c-0.24312 0 -0.47627 -0.09658 -0.64818 -0.26848 -0.17191 -0.17191 -0.26849 -0.40507 -0.26849 -0.64819v-2.75h10.0833v2.75Z" stroke-width="1"></path>
-                        <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M17.9673 18.4166v3.2084c0 0.2431 -0.0965 0.4763 -0.2685 0.6482 -0.1719 0.1718 -0.4051 0.2684 -0.6482 0.2684H2.38395c-0.24312 0 -0.47627 -0.0966 -0.64818 -0.2684 -0.17191 -0.1719 -0.26848 -0.4051 -0.26848 -0.6482V5.12498c0 -0.24312 0.09657 -0.47627 0.26848 -0.64818 0.17191 -0.17191 0.40506 -0.26849 0.64818 -0.26849h2.75" stroke-width="1"></path>
-                        <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M14.3008 4.20831h2.75c0.2431 0 0.4763 0.09658 0.6482 0.26849s0.2684 0.40506 0.2684 0.64818v3.20833" stroke-width="1"></path>
-                        <path fill="#e4f1f5" d="M11.0147 3.29169h2.3696c0.2431 0 0.4763 0.09658 0.6481 0.26848 0.172 0.17191 0.2685 0.40507 0.2685 0.64818v0.91667c0 0.24312 -0.0965 0.47627 -0.2685 0.64818 -0.1718 0.17191 -0.405 0.26849 -0.6481 0.26849H6.05094c-0.24311 0 -0.47627 -0.09658 -0.64818 -0.26849 -0.1719 -0.17191 -0.26848 -0.40506 -0.26848 -0.64818v-0.91667c0 -0.24311 0.09658 -0.47627 0.26848 -0.64818 0.17191 -0.1719 0.40507 -0.26848 0.64818 -0.26848h2.37417" stroke-width="1"></path>
-                        <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M11.0147 3.29169h2.3696c0.2431 0 0.4763 0.09658 0.6481 0.26848 0.172 0.17191 0.2685 0.40507 0.2685 0.64818v0.91667c0 0.24312 -0.0965 0.47627 -0.2685 0.64818 -0.1718 0.17191 -0.405 0.26849 -0.6481 0.26849H6.05094c-0.24311 0 -0.47627 -0.09658 -0.64818 -0.26849 -0.1719 -0.17191 -0.26848 -0.40506 -0.26848 -0.64818v-0.91667c0 -0.24311 0.09658 -0.47627 0.26848 -0.64818 0.17191 -0.1719 0.40507 -0.26848 0.64818 -0.26848h2.37417" stroke-width="1"></path>
-                        <path fill="#98b7c0" stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M9.71729 4.20831c0.27194 0 0.53781 -0.08064 0.76391 -0.23172 0.2261 -0.1511 0.4024 -0.36583 0.5064 -0.61708 0.1041 -0.25125 0.1314 -0.52772 0.0783 -0.79444 -0.0531 -0.26673 -0.1841 -0.51173 -0.3763 -0.70403 -0.1923 -0.1923 -0.4374 -0.32325 -0.70407 -0.37631 -0.26672 -0.05305 -0.54319 -0.02582 -0.79444 0.07825 -0.25124 0.10407 -0.46599 0.28031 -0.61708 0.50643 -0.15109 0.22611 -0.23172 0.49196 -0.23172 0.7639 0 0.36468 0.14486 0.71442 0.40272 0.97227 0.25786 0.25787 0.60761 0.40273 0.97228 0.40273Z" stroke-width="1"></path>
-                        <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M4.21729 9.70831H15.2173" stroke-width="1"></path>
-                        <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M4.21729 13.375h8.67711" stroke-width="1"></path>
-                        <path stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="M4.21729 17.0417H11.535" stroke-width="1"></path>
-                        <path fill="#66e1ff" stroke="#191919" stroke-linecap="round" stroke-linejoin="round" d="m16.5926 17.0417 -3.2083 0.9166 0.9166 -3.2083 5.4835 -5.48353c0.3056 -0.29579 0.7151 -0.45962 1.1405 -0.45618 0.4252 0.00346 0.832 0.17392 1.1328 0.47464 0.3007 0.30071 0.4712 0.70756 0.4746 1.13277 0.0034 0.4253 -0.1604 0.8349 -0.4562 1.1405l-5.4835 5.4835Z" stroke-width="1"></path>
-                    </svg>
+            <div class="d-flex align-items-center gap-2">
+                <span class="sidebar-icon svg-lg">
+                    <img src="{{ Vite::asset('resources/images/grades.png') }}">
                 </span>
-                <span class="nav-link-title">Exams / Grades</span>
+                Exams / Grades
             </div>
 
-            <!-- Right: Arrow -->
-            <span class="ms-auto">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="icon"
-                    width="24" height="24"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round">                    
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <polyline points="6 9 12 15 18 9" />
-                </svg>
-            </span>
+            <span style="font-size: 12px;">▾</span>
         </a>
 
-        <!-- Submenu -->
-        <div class="collapse" id="examsMenu">
-            <ul class="nav flex-column ms-4">
+        <div class="collapse sidebar-submenu {{ request()->routeIs('admin.exams.*') || request()->routeIs('admin.grades.*') ? 'show' : '' }}"
+             id="examsMenu">
+
+            <ul class="nav flex-column ms-4 mt-2">
                 <li class="nav-item">
                     <a class="nav-link" href="#">All Exams</a>
                 </li>
@@ -126,6 +94,36 @@
                     <a class="nav-link" href="#">Grades</a>
                 </li>
             </ul>
+
         </div>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.classes.*') ? 'active' : '' }}" href="#">
+            <span class="sidebar-icon svg-lg">
+                <img src="{{ Vite::asset('resources/images/class.png') }}">
+            </span>
+            Class
+        </a>
+    </li>
+
+</ul>
+
+<!-- <hr class="mx-3"> -->
+
+{{-- SETTINGS --}}
+<p class="sidebar-section-title">SETTINGS</p>
+
+<ul class="nav flex-column sidebar-nav">
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.academic.settings') ? 'active' : '' }}"
+           href="{{ route('admin.academic.settings') }}">
+            <span class="sidebar-icon svg-lg">
+                <img src="{{ Vite::asset('resources/images/settings.png') }}">
+            </span>
+            Configure
+        </a>
+    </li>
+
 </ul>
