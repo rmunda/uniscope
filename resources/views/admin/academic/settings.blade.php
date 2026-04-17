@@ -1,24 +1,21 @@
 <x-app-layout>
-   <x-slot name="header">
+   <x-slot name="header" class="sticky-header">
       <div class="container-xl mb-2">
          <div class="top-strip d-flex justify-content-between align-items-center">
-
             <!-- Left -->
             <div class="top-strip-left">
-                  Configure
+               Configure
             </div>
-
             <!-- Right -->
             <div class="top-strip-right">
-                  <span class="badge badge-live me-2">Live</span>
-                  <span class="badge badge-session">2029–2030 Active</span>
+               <span class="badge badge-live me-2">Live</span>
+               <span class="badge badge-session">2029–2030 Active</span>
             </div>
-
          </div>
       </div>
       <div class="container-xl">
          <div class="row align-items-center">
-            <div class="col d-flex align-items-center"> 
+            <div class="col d-flex align-items-center">
                {{-- <img src="{{ Vite::asset('resources/images/settings.png') }}"> --}}
                <h2 class="page-title">Academic Settings</h2>
             </div>
@@ -30,6 +27,11 @@
       <div class="mb-3">
          <ul class="nav nav-tabs" id="academic-tabs" role="tablist">
             <li class="nav-item">
+               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-roles" type="button">
+               Roles
+               </button>
+            </li>
+            <li class="nav-item">
                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-sessions" type="button">
                Sessions
                </button>
@@ -40,18 +42,13 @@
                </button>
             </li>
             <li class="nav-item">
-               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-subjects" type="button">
-               Subjects
-               </button>
-            </li>
-            <li class="nav-item">
                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-classes" type="button">
                Classes
                </button>
             </li>
             <li class="nav-item">
-               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-roles" type="button">
-               Roles
+               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-subjects" type="button">
+               Subjects
                </button>
             </li>
          </ul>
@@ -151,11 +148,11 @@
                               <form id="createSectionForm">
                                  @csrf
                                  <input type="hidden" id="edit_section_id">
-                                 <div class="input-group mb-2">
+                                 <div class="d-flex gap-3 mb-3">
                                     <input type="text" id="section_name_input" class="form-control" placeholder="Section A" required>
-                                    <button class="btn btn-primary" type="submit" id="btnTextSection">Create</button>
+                                    <button class="btn btn-primary rounded px-4" type="submit" id="btnTextSection"> + Create Section</button>
                                  </div>
-                                 <button id="cancelEditSection" class="btn btn-link btn-sm text-muted d-none mb-2" type="button">Cancel</button>
+                                 <button id="cancelEditSection" class="btn btn-secondary btn-sm d-none mb-2" type="button">Cancel</button>
                               </form>
                               <div class="input-icon mb-2">
                                  <span class="input-icon-addon">
@@ -214,11 +211,11 @@
                               <form id="createSubjectForm">
                                  @csrf
                                  <input type="hidden" id="edit_subject_id">
-                                 <div class="input-group mb-2">
+                                 <div class="d-flex gap-3 mb-3">
                                     <input type="text" id="subject_name_input" class="form-control" placeholder="Mathematics" required>
-                                    <button class="btn btn-primary" type="submit" id="btnTextSubject">Create</button>
+                                    <button class="btn btn-primary rounded px-4" type="submit" id="btnTextSubject">+ Create Subject</button>
                                  </div>
-                                 <button id="cancelEditSubject" class="btn btn-link btn-sm text-muted d-none mb-2" type="button">Cancel</button>
+                                 <button id="cancelEditSubject" class="btn btn-secondary btn-sm d-none mb-2" type="button">Cancel</button>
                               </form>
                               <div class="input-icon mb-2">
                                  <span class="input-icon-addon">
@@ -279,11 +276,11 @@
                               <form id="createClassForm">
                                  @csrf
                                  <input type="hidden" id="edit_class_id">
-                                 <div class="input-group mb-2">
+                                 <div class="d-flex gap-3 mb-3">
                                     <input type="text" id="class_name_input" class="form-control" placeholder="Class 10" required>
-                                    <button class="btn btn-primary" type="submit" id="btnTextClass">Create</button>
+                                    <button class="btn btn-primary rounded px-4" type="submit" id="btnTextClass">+ Create Class</button>
                                  </div>
-                                 <button id="cancelEditClass" class="btn btn-link btn-sm text-muted d-none mb-2" type="button">Cancel</button>
+                                 <button id="cancelEditClass" class="btn btn-secondary btn-sm d-none mb-2" type="button">Cancel</button>
                               </form>
                               <div class="input-icon mb-2">
                                  <span class="input-icon-addon">
@@ -300,6 +297,8 @@
                                     <tr>
                                        <th>#</th>
                                        <th>Name</th>
+                                       <th>Sections</th>
+                                       <th>Count</th>
                                        <th class="text-end">Actions</th>
                                     </tr>
                                  </thead>
@@ -331,7 +330,66 @@
                         </div>
                      </div>
                   </div>
+                  <!-- Assign Section -->
+                  <div class="row mt-4">
+                     <div class="col-md-8">
+                        <div class="card">
+                           <div class="card-header">
+                              <h3 class="card-title"><strong>Assign Sections</strong></h3>
+                           </div>
+                           <div class="card-body">
+                              <form id="assignSectionForm">
+                                 @csrf
+                                 <div class="row g-2 mb-3">
+                                    <!-- Class Dropdown -->
+                                    <div class="col-md-5">
+                                       <select id="class_dropdown" class="form-select" required>
+                                          <option value="">Select Class</option>
+                                          <!-- Dynamically populate -->
+                                       </select>
+                                    </div>
+                                    <!-- Section Dropdown -->
+                                    <div class="col-md-5">
+                                       <select id="section_dropdown" class="form-select" required>
+                                          <option value="">Select Section</option>
+                                          <!-- Dynamically populate -->
+                                       </select>
+                                    </div>
+                                    <!-- Add Button -->
+                                    <div class="col-md-2">
+                                       <button type="submit" class="btn btn-success w-100">
+                                       + Add
+                                       </button>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Right: Info Box -->
+                     <div class="col-md-4">
+                        <div class="card border-0 shadow-none">
+                           <div class="card-body">
+                              <div class="d-flex mb-2">
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon text-success me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M5 12l5 5l10 -10"></path>
+                                 </svg>
+                                 <h4 class="m-0 text-success">Section Assignment</h4>
+                              </div>
+                              <p class="text-secondary small">
+                                 Assign Sections to Classes (e.g., <strong>Class 10 → Section A</strong>).
+                              </p>
+                              <p class="text-secondary small mb-0">
+                                 This helps organize students and enables accurate attendance, reports, and class-wise operations.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- End -->
                </div>
+               <!-- End -->
                <!-- ROLES TAB -->
                <div class="tab-pane fade" id="tab-roles" role="tabpanel">
                   <div class="row">
@@ -344,11 +402,11 @@
                               <form id="createRoleForm">
                                  @csrf
                                  <input type="hidden" id="edit_role_id">
-                                 <div class="input-group mb-2">
+                                 <div class="d-flex gap-3 mb-3">
                                     <input type="text" id="role_name_input" class="form-control" placeholder="Teacher" required>
-                                    <button class="btn btn-primary" type="submit" id="btnTextRole">Create</button>
+                                    <button class="btn btn-primary rounded px-4" type="submit" id="btnTextRole">+ Create Role</button>
                                  </div>
-                                 <button id="cancelEditRole" class="btn btn-link btn-sm text-muted d-none mb-2" type="button">Cancel</button>
+                                 <button id="cancelEditRole" class="btn btn-secondary btn-sm d-none mb-2" type="button">Cancel</button>
                               </form>
                               <div class="input-icon mb-2">
                                  <span class="input-icon-addon">
@@ -415,7 +473,7 @@
                <p>Are you sure you want to delete <strong id="deleteTargetName"></strong>?</p>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+               <button type="button" class="btn btn-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
                <button type="button" id="confirmDeleteBtn" class="btn btn-danger">Yes, Delete</button>
             </div>
          </div>
@@ -461,289 +519,469 @@
    @endpush
    @push('scripts')
    <script>
-      $(document).ready(function () {
-      
-         $('#deleteModal').on('shown.bs.modal', function () {
-            // Focus the 'Cancel' button instead of the 'X' button
-            $(this).find('.btn-link').focus();
-         });
-      
-         // --- RESTORE ACTIVE TAB FROM URL HASH ---
-         let hash = window.location.hash;
-         if (hash) {
-            let tab = $('#academic-tabs a[href="' + hash + '"]');
-            if (tab.length) tab.tab('show');
+
+      // ════════════════════════════════════════════════════════════
+      // SHARED STATE  (outside document.ready — accessible to all)
+      // ════════════════════════════════════════════════════════════
+      const sharedState = {
+         deleteUrl  : null,
+         activeTable: null,
+         payload: null
+      };
+
+      // ════════════════════════════════════════════════════════════
+      // SESSION MODULE  (defined outside document.ready)
+      // ════════════════════════════════════════════════════════════
+      const sessionModule = {
+
+         table: null,
+
+         init() {
+            this.initTable();
+            this.bindEvents();
+            this.load();
+         },
+
+         initTable() {
+            this.table = $('#session-table').DataTable({
+               processing : true,
+               serverSide : true,
+               ajax       : "{{ route('admin.academic.sessions.index') }}",
+               pageLength : 3,
+               dom        : 'tpr',
+               ordering   : false,
+               columns: [
+                  { data: 'DT_RowIndex',   searchable: false, orderable: false },
+                  { data: 'session_name',  searchable: true },
+                  { data: 'action',        className: 'text-end', searchable: false, orderable: false }
+               ]
+            });
+         },
+
+         bindEvents() {
+
+            // Search
+            $('#search-session').on('keyup', () => {
+               this.table.search($('#search-session').val()).draw();
+            });
+
+            // Delete — writes to sharedState
+            $(document).on('click', '.delete-session', (e) => {
+               e.preventDefault();
+               const btn = $(e.currentTarget);
+               sharedState.deleteUrl   = btn.data('url');
+               sharedState.activeTable = this.table;
+               $('#deleteTargetName').text(btn.closest('tr').find('td:nth-child(2)').text().trim());
+               $('#deleteModal').modal('show');
+            });
+
+            // Create
+            $('#createSessionForm').on('submit', (e) => {
+               e.preventDefault();
+               api.post("{{ route('admin.academic.sessions.store') }}", {
+                  session_name: $('#session_name').val()
+               })
+               .then(res => {
+                  showToast('success', res.data.message || 'Session created');
+                  e.target.reset();
+                  this.table.ajax.reload(null, false);
+                  this.load();
+               })
+               .catch(err => {
+                  showToast('error', err.response?.data?.message || 'Error creating session');
+               });
+            });
+
+            // Set active session
+            $('#setSessionForm').on('submit', (e) => {
+               e.preventDefault();
+               const id = $('#sessionDropdown').val();
+               if (!id) { showToast('error', 'Please select a session'); return; }
+
+               api.put(
+                  "{{ route('admin.academic.sessions.update', ['session' => ':id']) }}"
+                     .replace(':id', id)
+               )
+               .then(res => {
+                  showToast('success', res.data.message || 'Session activated');
+                  this.load();
+                  this.table.ajax.reload(null, false);
+               })
+               .catch(err => {
+                  showToast('error', err.response?.data?.message || 'Error activating session');
+               });
+            });
+         },
+
+         load() {
+            api.get("{{ route('admin.academic.sessions.index') }}")
+               .then(res => {
+                  const select = $('#sessionDropdown');
+                  select.empty().append('<option value="">Select session...</option>');
+                  res.data.data.forEach(s => {
+                     select.append(`
+                        <option value="${s.id}" ${s.is_active ? 'selected' : ''}>
+                           ${s.session_name} ${s.is_active ? '(Active)' : ''}
+                        </option>
+                     `);
+                  });
+               });
          }
-      
-         // --- SAVE TAB TO URL HASH ON SWITCH ---
-         $('#academic-tabs a').on('shown.bs.tab', function (e) {
-            history.replaceState(null, null, $(e.target).attr('href'));
-      
-            // Reinitialize DataTables that were hidden (needed for correct column widths)
-            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+      };
+
+      // ════════════════════════════════════════════════════════════
+      // CLASS MODULE  (defined outside document.ready)
+      // ════════════════════════════════════════════════════════════
+      const classModule = {
+
+         table: null,
+
+         init() {
+            this.initTable();
+            this.bindEvents();
+            this.loadDropdowns();
+         },
+
+         initTable() {
+            this.table = $('#classes-table').DataTable({
+               processing : true,
+               serverSide : true,
+               ajax       : "{{ route('admin.academic.class-sections.index') }}",
+               pageLength : 3,
+               dom        : 'tpr',
+               ordering   : false,
+               columns: [
+                  { data: 'DT_RowIndex', searchable: false, orderable: false },
+                  { data: 'class_name',  searchable: true },
+                  { data: 'section_names', searchable: false, orderable: false },
+                  { data: 'section_count', searchable: false, orderable: false },
+                  { data: 'action',      className: 'text-end', searchable: false, orderable: false }
+               ]
+            });
+         },
+
+         bindEvents() {
+
+            // Search
+            $('#search-class').on('keyup', () => {
+               this.table.search($('#search-class').val()).draw();
+            });
+
+            // Create / Update
+            $('#createClassForm').on('submit', (e) => {
+               e.preventDefault();
+               const id     = $('#edit_class_id').val();
+               const url    = id
+                  ? $('#edit_class_id').data('url')
+                  : "{{ route('admin.academic.classes.store') }}";
+               const method = id ? 'put' : 'post';
+
+               api({ method, url, data: { class_name: $('#class_name_input').val() } })
+                  .then(res => {
+                     showToast('success', res.data.message || 'Saved');
+                     $('#cancelEditClass').trigger('click');
+                     this.table.ajax.reload(null, false);
+                     this.loadDropdowns();
+                  })
+                  .catch(err => {
+                     showToast('error', err.response?.data?.message || 'Error saving class');
+                  });
+            });
+
+            // Edit — populate form
+            $('#classes-table').on('click', '.edit-class', (e) => {
+               e.preventDefault();
+               const btn = $(e.currentTarget);
+               $('#edit_class_id').val(btn.data('id')).data('url', btn.data('url'));
+               $('#class_name_input').val(btn.closest('tr').find('td:nth-child(2)').text().trim()).focus();
+               $('#btnTextClass').text('Update Class');
+               $('#cancelEditClass').removeClass('d-none');
+            });
+
+            // Cancel edit
+            $('#cancelEditClass').on('click', () => {
+               $('#createClassForm')[0].reset();
+               $('#edit_class_id').val('').removeData('url');
+               $('#btnTextClass').text('+ Create Class');
+               $('#cancelEditClass').addClass('d-none');
+            });
+
+            // Delete — writes to sharedState
+            $('#classes-table').on('click', '.delete-class', (e) => {
+               e.preventDefault();
+               const btn = $(e.currentTarget);
+               sharedState.deleteUrl   = btn.data('url');
+               sharedState.activeTable = this.table;
+               $('#deleteTargetName').text(btn.closest('tr').find('td:nth-child(2)').text().trim());
+               $('#deleteModal').modal('show');
+            });
+
+            // Assign section to class
+            $('#assignSectionForm').on('submit', (e) => {
+               e.preventDefault();
+               const classId   = $('#class_dropdown').val();
+               const sectionId = $('#section_dropdown').val();
+
+               if (!classId || !sectionId) {
+                  showToast('error', 'Please select both a class and a section');
+                  return;
+               }
+
+               api.post("{{ route('admin.academic.class-sections.store') }}", {
+                  class_id  : classId,
+                  section_id: sectionId
+               })
+               .then(res => {
+                  showToast('success', res.data.message || 'Section assigned');
+                  $('#assignSectionForm')[0].reset();
+                  this.table.ajax.reload(null, false);
+               })
+               .catch(err => {
+                  showToast('error', err.response?.data?.message || 'Assignment failed');
+               });
+            });
+
+            // Remove section from class (chips UI via modal)
+            $('#classes-table').on('click', '.delete-class-section', (e) => {
+               e.preventDefault();
+
+               const btn       = $(e.currentTarget);
+               const classId   = btn.data('class');
+               const sectionId = btn.data('section');
+
+               // Set delete URL (same route pattern)
+               //sharedState.deleteUrl = "{{ route('admin.academic.class-sections.destroy', ':id') }}"
+               //.replace(':id', classId);
+               sharedState.deleteUrl = btn.data('url');
+               console.log(sharedState.deleteUrl);
+
+               // Attach table (for reload later)
+               sharedState.activeTable = this.table;
+
+               // Pass payload (VERY IMPORTANT)
+               sharedState.payload = {
+                  class_id: classId,
+                  section_id: sectionId
+               };
+
+               // Set modal text (clean section name)
+               const sectionName = btn.closest('.badge').text().replace('✕', '').trim();
+               $('#deleteTargetName').text(sectionName);
+
+               // Open modal
+               $('#deleteModal').modal('show');
+            });
+            
+         },
+
+         loadDropdowns() {
+            // Load class
+            api.get("{{ route('admin.academic.classes.index') }}")
+               .then(res => {
+                  const select = $('#class_dropdown');
+                  select.empty().append('<option value="">Select Class</option>');
+                  (res.data.data ?? res.data).forEach(c => {
+                     select.append(`<option value="${c.id}">${c.class_name}</option>`);
+                  });
+               })
+               .catch(() => {});
+
+            // Load section
+            api.get("{{ route('admin.academic.sections.index') }}")
+               .then(res => {
+                  const select = $('#section_dropdown');
+                  select.empty().append('<option value="">Select Section</option>');
+                  (res.data.data ?? res.data).forEach(s => {
+                     select.append(`<option value="${s.id}">${s.section_name}</option>`);
+                  });
+               })
+               .catch(() => {});
+         }
+      };
+
+      // ════════════════════════════════════════════════════════════
+      // REUSABLE SIMPLE CRUD  (defined outside document.ready)
+      // ════════════════════════════════════════════════════════════
+      function initSimpleCRUD(config) {
+
+         const table = $(config.tableId).DataTable({
+            processing : true,
+            serverSide : true,
+            ajax       : config.indexUrl,
+            pageLength : 3,
+            dom        : 'tpr',
+            ordering   : false,
+            columns: [
+               { data: 'DT_RowIndex',    searchable: false, orderable: false },
+               { data: config.fieldName, searchable: true },
+               { data: 'action',         className: 'text-end', searchable: false, orderable: false }
+            ]
          });
-      
-         // --- GLOBAL DELETE STATE ---
-         let deleteUrl = null;
-         let activeTable = null;
-      
-         // --- GLOBAL DELETE CONFIRM ---
+
+         $(config.searchId).on('keyup', function () {
+            table.search(this.value).draw();
+         });
+
+         $(config.tableId).on('click', config.editBtnClass, function (e) {
+            e.preventDefault();
+            const btn = $(this);
+            $(config.idInput).val(btn.data('id')).data('url', btn.data('url'));
+            $(config.nameInput).val(btn.closest('tr').find('td:nth-child(2)').text().trim()).focus();
+            $(config.btnText).text(`Update ${config.label}`);
+            $(config.cancelBtn).removeClass('d-none');
+         });
+
+         // Delete — writes to sharedState
+         $(config.tableId).on('click', config.deleteBtnClass, function (e) {
+            e.preventDefault();
+            sharedState.deleteUrl   = $(this).data('url');
+            sharedState.activeTable = table;
+            $('#deleteTargetName').text($(this).closest('tr').find('td:nth-child(2)').text().trim());
+            $('#deleteModal').modal('show');
+         });
+
+         $(config.cancelBtn).on('click', function () {
+            $(config.formId)[0].reset();
+            $(config.idInput).val('').removeData('url');
+            $(config.btnText).text(`+ Create ${config.label}`);
+            $(this).addClass('d-none');
+         });
+
+         $(config.formId).on('submit', function (e) {
+            e.preventDefault();
+            const id      = $(config.idInput).val();
+            const url     = id ? $(config.idInput).data('url') : config.storeUrl;
+            const method  = id ? 'put' : 'post';
+            const payload = { [config.fieldName]: $(config.nameInput).val() };
+
+            axios({ method, url, data: payload })
+               .then(res => {
+                  showToast('success', res.data.message || 'Saved');
+                  $(config.cancelBtn).trigger('click');
+                  table.ajax.reload(null, false);
+               })
+               .catch(err => {
+                  showToast('error', err.response?.data?.message || 'Operation failed');
+               });
+         });
+      }
+
+      // ════════════════════════════════════════════════════════════
+      // BOOT — only .init() calls and DOM-dependent handlers here
+      // ════════════════════════════════════════════════════════════
+      $(document).ready(function () {
+
+         // Global delete confirm — reads from sharedState
          $('#confirmDeleteBtn').on('click', function () {
-            console.log(deleteUrl);
-            if (!deleteUrl) return;
-      
-            api.delete(deleteUrl)
+            if (!sharedState.deleteUrl) return;
+
+            api.delete(sharedState.deleteUrl, {data: sharedState.payload || {}})
                .then(res => {
                   showToast('success', res.data?.message || 'Deleted successfully');
                   $('#deleteModal').modal('hide');
-                  if (activeTable) {
-                     const pageInfo = activeTable.page.info();
-                     
-                     // Check if we are on a page beyond the first one 
-                     // AND if there is only 1 row currently displayed on this page
-                     const isLastRowOnPage = (pageInfo.recordsDisplay - pageInfo.start) === 1;
-                     
-                     if (isLastRowOnPage && pageInfo.page > 0) {
-                           // Move to the previous page and reload
-                           activeTable.page('previous').draw('page');
+
+                  if (sharedState.activeTable) {
+                     const info      = sharedState.activeTable.page.info();
+                     const isLastRow = (info.recordsDisplay - info.start) === 1;
+
+                     if (isLastRow && info.page > 0) {
+                        sharedState.activeTable.page('previous').draw('page');
                      } else {
-                           // Stay on the current page and reload
-                           activeTable.ajax.reload(null, false);
+                        sharedState.activeTable.ajax.reload(null, false);
                      }
                   }
-      
-                  if (deleteUrl.includes('sessions')) loadSessions();
+
+                  if (sharedState.deleteUrl.includes('sessions')) sessionModule.load();
+                  if (sharedState.deleteUrl.includes('classes'))  classModule.loadDropdowns();
+
+                  sharedState.deleteUrl   = null;
+                  sharedState.activeTable = null;
                })
                .catch(err => {
                   showToast('error', err.response?.data?.message || 'Delete failed');
                });
          });
-      
-         // --- REUSABLE CRUD ---
-         function initSimpleCRUD(config) {
-      
-            let table = $(config.tableId).DataTable({
-               processing: true,
-               serverSide: true,
-               ajax: config.indexUrl,
-               pageLength: 3,
-               dom: 'tpr',
-               ordering: false,
-               columns: [
-                  { data: 'DT_RowIndex' },
-                  { data: config.fieldName },
-                  { data: 'action', className: 'text-end' }
-               ]
-            });
-      
-            $(config.searchId).on('keyup', function () {
-               table.search(this.value).draw();
-            });
-      
-            $(config.tableId).on('click', config.editBtnClass, function (e) {
-               e.preventDefault();
-               let btn = $(this);
-               let id = btn.data('id');
-               let url = btn.data('url');
-               console.log(url);
-               let name = btn.closest('tr').find('td:nth-child(2)').text().trim();
-      
-               $(config.idInput).val(id).data('url', url);
-               $(config.nameInput).val(name).focus();
-               $(config.btnText).text('Update');
-               $(config.cancelBtn).removeClass('d-none');
-            });
-      
-            $(config.tableId).on('click', config.deleteBtnClass, function (e) {
-               e.preventDefault();
-               let btn = $(this);
-               deleteUrl = btn.data('url');
-               console.log(deleteUrl);
-               activeTable = table;
-               $('#deleteTargetName').text(btn.closest('tr').find('td:nth-child(2)').text().trim());
-               $('#deleteModal').modal('show');
-            });
-      
-            $(config.cancelBtn).on('click', function () {
-               $(config.formId)[0].reset();
-               $(config.idInput).val('').removeData('url');
-               $(config.btnText).text('Create');
-               $(this).addClass('d-none');
-            });
-      
-            $(config.formId).on('submit', function (e) {
-               e.preventDefault();
-               let id = $(config.idInput).val();
-               let url = id ? $(config.idInput).data('url') : config.storeUrl;
-               let method = id ? 'put' : 'post';
-               let payload = {};
-               payload[config.fieldName] = $(config.nameInput).val();
-      
-               axios({ method, url, data: payload })
-                  .then(res => {
-                     showToast('success', res.data.message || 'Saved');
-                     $(config.cancelBtn).click();
-                     table.ajax.reload(null, false);
-                  })
-                  .catch(err => {
-                     showToast('error', err.response?.data?.message || 'Operation failed');
-                  });
-            });
+
+         // Reset sharedState when modal is dismissed without confirming
+         $('#deleteModal').on('hidden.bs.modal', function () {
+            sharedState.deleteUrl   = null;
+            sharedState.activeTable = null;
+            sharedState.payload     = null;
+         });
+
+         if (sharedState.payload) {
+            // instant UI removal
+            $('.delete-class-section[data-class="'+sharedState.payload.class_id+'"][data-section="'+sharedState.payload.section_id+'"]')
+               .closest('.badge')
+               .remove();
          }
-      
-         // --- SESSION DELETE ---
-         $(document).on('click', '.delete-session', function (e) {
-            e.preventDefault();
-            let btn = $(this);
-            deleteUrl = btn.data('url');
-            activeTable = $('#session-table').DataTable();
-            $('#deleteTargetName').text(btn.closest('tr').find('td:nth-child(2)').text().trim());
-            $('#deleteModal').modal('show');
-         });
-      
-         // --- LOAD SESSIONS DROPDOWN ---
-         function loadSessions() {
-            api.get("{{ route('admin.academic.sessions.index') }}")
-               .then(res => {
-                  // console.log(res.data);
-                  let select = $('#sessionDropdown');
-                  select.empty().append('<option value="">Select session...</option>');
-                  res.data.data.forEach(s => {
-                     select.append(`<option value="${s.id}" ${s.is_active ? 'selected' : ''}>${s.session_name} ${s.is_active ? '(Active)' : ''}</option>`);
-                  });
-               });
+
+         // Tab hash persistence
+         const hash = window.location.hash;
+         if (hash) {
+            const tab = $(`#academic-tabs button[data-bs-target="${hash}"]`);
+            if (tab.length) bootstrap.Tab.getOrCreateInstance(tab[0]).show();
          }
-      
-         // --- CREATE SESSION ---
-         $('#createSessionForm').on('submit', function (e) {
-            e.preventDefault();
-            api.post("{{ route('admin.academic.sessions.store') }}", {
-               session_name: $('#session_name').val()
-            })
-            .then(res => {
-               showToast('success', res.data.message || 'Session created');
-               this.reset();
-               $('#session-table').DataTable().ajax.reload(null, false);
-               loadSessions();
-            })
-            .catch(err => {
-               showToast('error', err.response?.data?.message || 'Error');
-            });
+
+         $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+            history.replaceState(null, null, $(e.target).data('bs-target').replace('tab-', '#'));
+            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
          });
-      
-         // --- SET ACTIVE SESSION ---
-         $('#setSessionForm').on('submit', function (e) {
-            e.preventDefault();
-            let id = $('#sessionDropdown').val();
-            api.put(
-               "{{ route('admin.academic.sessions.update', ['session' => ':id']) }}".replace(':id', id)
-            )
-            .then(res => {
-               showToast('success', res.data.message || 'Session activated');
-               loadSessions();
-               $('#session-table').DataTable().ajax.reload(null, false);
-            })
-            .catch(err => {
-               showToast('error', err.response?.data?.message || 'Error');
-            });
-         });
-      
-         // --- SESSION TABLE ---
-         $('#session-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('admin.academic.sessions.index') }}",
-            pageLength: 3,
-            dom: 'tpr',
-            ordering: false,
-            columns: [
-               { 
-                     data: 'DT_RowIndex', 
-                     name: 'DT_RowIndex', 
-                     searchable: false, // Prevents searching on index
-                     orderable: false 
-               },
-               { 
-                     data: 'session_name', 
-                     name: 'session_name',
-                     searchable: true // Explicitly allow search here
-               },
-               { 
-                     data: 'action', 
-                     name: 'action', 
-                     className: 'text-end', 
-                     searchable: false, // Prevents searching on action buttons
-                     orderable: false 
-               }
-            ]
-         });
-      
-         $('#search-session').on('keyup', function () {
-            $('#session-table').DataTable().search(this.value).draw();
-         });
-      
-         // --- INIT ALL MODULES ---
+
+         // Boot all modules
+         sessionModule.init();
+         classModule.init();
+
          initSimpleCRUD({
-            tableId: '#sections-table',
-            searchId: '#search-section',
-            formId: '#createSectionForm',
-            idInput: '#edit_section_id',
-            nameInput: '#section_name_input',
-            btnText: '#btnTextSection',
-            cancelBtn: '#cancelEditSection',
-            editBtnClass: '.edit-section',
+            label        : 'Section',
+            tableId      : '#sections-table',
+            searchId     : '#search-section',
+            formId       : '#createSectionForm',
+            idInput      : '#edit_section_id',
+            nameInput    : '#section_name_input',
+            btnText      : '#btnTextSection',
+            cancelBtn    : '#cancelEditSection',
+            editBtnClass : '.edit-section',
             deleteBtnClass: '.delete-section',
-            fieldName: 'section_name',
-            indexUrl: "{{ route('admin.academic.sections.index') }}",
-            storeUrl: "{{ route('admin.academic.sections.store') }}"
+            fieldName    : 'section_name',
+            indexUrl     : "{{ route('admin.academic.sections.index') }}",
+            storeUrl     : "{{ route('admin.academic.sections.store') }}"
          });
-      
+
          initSimpleCRUD({
-            tableId: '#subjects-table',
-            searchId: '#search-subject',
-            formId: '#createSubjectForm',
-            idInput: '#edit_subject_id',
-            nameInput: '#subject_name_input',
-            btnText: '#btnTextSubject',
-            cancelBtn: '#cancelEditSubject',
-            editBtnClass: '.edit-subject',
+            label        : 'Subject',
+            tableId      : '#subjects-table',
+            searchId     : '#search-subject',
+            formId       : '#createSubjectForm',
+            idInput      : '#edit_subject_id',
+            nameInput    : '#subject_name_input',
+            btnText      : '#btnTextSubject',
+            cancelBtn    : '#cancelEditSubject',
+            editBtnClass : '.edit-subject',
             deleteBtnClass: '.delete-subject',
-            fieldName: 'subject_name',
-            indexUrl: "{{ route('admin.academic.subjects.index') }}",
-            storeUrl: "{{ route('admin.academic.subjects.store') }}"
+            fieldName    : 'subject_name',
+            indexUrl     : "{{ route('admin.academic.subjects.index') }}",
+            storeUrl     : "{{ route('admin.academic.subjects.store') }}"
          });
-      
+
          initSimpleCRUD({
-            tableId: '#classes-table',
-            searchId: '#search-class',
-            formId: '#createClassForm',
-            idInput: '#edit_class_id',
-            nameInput: '#class_name_input',
-            btnText: '#btnTextClass',
-            cancelBtn: '#cancelEditClass',
-            editBtnClass: '.edit-class',
-            deleteBtnClass: '.delete-class',
-            fieldName: 'class_name',
-            indexUrl: "{{ route('admin.academic.classes.index') }}",
-            storeUrl: "{{ route('admin.academic.classes.store') }}"
-         });
-      
-         initSimpleCRUD({
-            tableId: '#roles-table',
-            searchId: '#search-role',
-            formId: '#createRoleForm',
-            idInput: '#edit_role_id',
-            nameInput: '#role_name_input',
-            btnText: '#btnTextRole',
-            cancelBtn: '#cancelEditRole',
-            editBtnClass: '.edit-role',
+            label        : 'Role',
+            tableId      : '#roles-table',
+            searchId     : '#search-role',
+            formId       : '#createRoleForm',
+            idInput      : '#edit_role_id',
+            nameInput    : '#role_name_input',
+            btnText      : '#btnTextRole',
+            cancelBtn    : '#cancelEditRole',
+            editBtnClass : '.edit-role',
             deleteBtnClass: '.delete-role',
-            fieldName: 'role_name',
-            indexUrl: "{{ route('admin.roles.index') }}",
-            storeUrl: "{{ route('admin.roles.store') }}"
+            fieldName    : 'role_name',
+            indexUrl     : "{{ route('admin.roles.index') }}",
+            storeUrl     : "{{ route('admin.roles.store') }}"
          });
-      
-      });
+
+      }); // end document.ready
+
    </script>
-   @endpush
+   @endpush   
 </x-app-layout>

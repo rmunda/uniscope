@@ -112,7 +112,7 @@
 <!-- <hr class="mx-3"> -->
 
 {{-- SETTINGS --}}
-<p class="sidebar-section-title">SETTINGS</p>
+<p class="sidebar-section-title">ADMIN</p>
 
 <ul class="nav flex-column sidebar-nav">
 

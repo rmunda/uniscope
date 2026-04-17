@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AcademicClassController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ClassSectionController;
 
 // Standard Routes
 Route::get('/', fn() => view('welcome'));
@@ -38,6 +39,8 @@ Route::prefix('admin')
             Route::resource('classes', AcademicClassController::class);
             Route::resource('sections', SectionController::class);
             Route::resource('subjects', SubjectController::class); // Fixed controller
+            Route::resource('class-sections', ClassSectionController::class)
+                ->only(['index', 'store', 'destroy']);
         });
 
         // Admin-only Routes (Nested inside 'admin' prefix)

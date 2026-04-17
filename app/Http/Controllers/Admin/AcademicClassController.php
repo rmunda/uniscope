@@ -18,46 +18,11 @@ class AcademicClassController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            // 1. Fetch the query
-            $data = AcademicClass::select(['id', 'class_name']);
+        $data = AcademicClass::select(['id', 'class_name'])->get();
 
-            // 2. Initialize Yajra Datatables
-            return DataTables::of($data)
-                ->addIndexColumn() // Generates the '#' column automatically
-                ->addColumn('action', function ($row) {
-                    // 1. Generate URLs here using your named routes
-                    $editUrl = route('admin.academic.classes.update', $row->id);
-                    $deleteUrl = route('admin.academic.classes.destroy', $row->id);
-
-                    $btn = '<div class="btn-list flex-nowrap justify-content-end">';
-
-                    // 2. Embed into the Edit Button (using href if it's a link, or data-url for AJAX)
-                    // Edit Button
-                    $btn .= '<button class="btn btn-outline-success d-flex align-items-center edit-class" data-id="'.$row->id.'" data-url="'.$editUrl.'">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
-                                <span>Edit</span>
-                             </button>';
-
-                    // Delete Button
-                    $btn .= '<button class="btn btn-outline-danger d-flex align-items-center delete-class" data-id="'.$row->id.'" data-url="'.$deleteUrl.'">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                <span>Delete</span>
-                             </button>';
-
-                    $btn .= '</div>';
-
-                    return $btn;
-                })
-                ->rawColumns(['action']) // Essential to render the HTML buttons
-                ->filterColumn('DT_RowIndex', function($query, $keyword) {
-                    // Keep this empty. It prevents SQL from looking for "academic_sessions.DT_RowIndex"
-                })
-                ->make(true);
-        }
-
-        // Return the initial view for non-AJAX requests
-        return view('admin.academic.settings');
+        return response()->json([
+            'data' => $data
+        ]);
     }
 
     /**
@@ -87,7 +52,7 @@ class AcademicClassController extends Controller
         } catch (\Exception $e) {
             \Log::error('Failed to add class', [
                 'class_name' => $request->class_name,
-                'error' => $e->getMessage(),
+                'error' => app()->isProduction() ? null : $e->getMessage(),
             ]);
 
             return response()->json([

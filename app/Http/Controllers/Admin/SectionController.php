@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateSectionRequest;
 // --- ADD THIS LINE ---
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 
 class SectionController extends Controller
 {
@@ -32,13 +34,15 @@ class SectionController extends Controller
 
                     $btn = '<div class="btn-list flex-nowrap justify-content-end">';
                     // Edit Button
-                    $btn .= '<button class="btn btn-outline-success btn-xxs btn-icon edit-section" data-id="'.$row->id.'" data-url="'.$editUrl.'">
+                    $btn .= '<button class="btn btn-outline-success d-flex edit-section" data-id="'.$row->id.'" data-url="'.$editUrl.'">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
+                                <span>Edit</span>
                              </button>';
 
                     // Delete Button
-                    $btn .= '<button class="btn btn-outline-danger btn-xxs btn-icon delete-section" data-id="'.$row->id.'" data-url="'.$deleteUrl.'">
+                    $btn .= '<button class="btn btn-outline-danger d-flex delete-section" data-id="'.$row->id.'" data-url="'.$deleteUrl.'">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                <span>Delete</span>
                              </button>';
 
                     $btn .= '</div>';
@@ -107,6 +111,17 @@ class SectionController extends Controller
      */
     public function update(UpdateSectionRequest $request, Section $section)
     {
+        // Check if the name is being changed
+        if ($request->has('section_name') && $request->section_name !== $section->section_name) {
+            // Check if it's already used in the pivot table
+            if ($section->classes()->exists()) {
+                return response()->json([
+                    'message' => 'Cannot rename this section because it is already assigned to classes. Create a new section instead.'
+                ], 409);
+            }
+        }
+
+        // Allow update
         try {
             $section->update([
                 'section_name' => $request->section_name,
@@ -130,22 +145,54 @@ class SectionController extends Controller
      */
     public function destroy(Section $section)
     {
+        
+        // 1. PROACTIVE CHECK (Recommended)
+        // Assuming you have a 'classes()' relationship defined on your Section model.
+        // This checks if the section has any entries in the pivot table.
+        
+        if ($section->classes()->exists()) {
+            return response()->json([
+                'message' => 'Cannot delete this section because it is currently assigned to one or more classes. Please remove those assignments first.',
+            ], 409); // 409 Conflict is the standard HTTP status for this scenario
+        }
+
         try {
             $section->delete();
 
             return response()->json([
                 'message' => 'Section deleted successfully!',
             ]);
-        }
-        catch (\Exception $e) {
-             \Log::error('Failed to delete section', [
+
+        } catch (QueryException $e) {
+            // 2. CATCH FOREIGN KEY REJECTION (Fallback)
+            // Error code 23000 is the SQL standard code for constraint violations
+            if ($e->getCode() === '23503') {
+                return response()->json([
+                    'message' => 'Cannot delete section due to existing database relationships.',
+                ], 409);
+            }
+
+            // Handle other database-related exceptions
+            Log::error('Database error while deleting section', [
                 'section_id' => $section->id,
                 'error'      => $e->getMessage(),
             ]);
 
-            return response()-json([
+            return response()->json([
+                'message' => 'A database error occurred while trying to delete the section.',
+                'error'   => app()->isProduction() ? null : $e->getMessage()
+            ], 500);
+
+        } catch (\Exception $e) {
+            // 3. CATCH GENERAL EXCEPTIONS
+            Log::error('Failed to delete section', [
+                'section_id' => $section->id,
+                'error'      => $e->getMessage(),
+            ]);
+
+            return response()->json([ // Note: Fixed the typo `response()-json` from your code here
                 'message' => 'Failed to delete section',
-                'error' => app()->isProduction() ? null : $e->getMessage()
+                'error'   => app()->isProduction() ? null : $e->getMessage()
             ], 500);
         }
     }

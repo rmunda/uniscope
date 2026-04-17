@@ -269,3 +269,11 @@
     background-color: #e0edff;  /* light blue */
     color: #1d4ed8;             /* blue text */
 }
+
+.sticky-header {
+   position: sticky;
+   top: 0;
+   z-index: 10;
+   background: #fff;
+   border-bottom: 1px solid #eee;
+}
