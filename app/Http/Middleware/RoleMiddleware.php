@@ -18,7 +18,7 @@ class RoleMiddleware
         if(!auth()->check()){
             return redirect('/login');
         }
-        if (!in_array(auth()->user()->role, $roles)) {
+        if (!auth()->user()->hasAnyRole($roles)) {
             abort(403);
         }
         return $next($request);

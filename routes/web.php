@@ -9,7 +9,6 @@ use App\Http\Controllers\Admin\AcademicSessionController;
 use App\Http\Controllers\Admin\AcademicClassController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SubjectController;
-use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ClassSectionController;
 
 // Standard Routes
@@ -43,10 +42,6 @@ Route::prefix('admin')
                 ->only(['index', 'store', 'destroy']);
         });
 
-        // Admin-only Routes (Nested inside 'admin' prefix)
-        Route::middleware('role:admin')->group(function () {
-            Route::resource('roles', RoleController::class); // Fixed controller
-        });
     });    
 
 require __DIR__.'/auth.php';
